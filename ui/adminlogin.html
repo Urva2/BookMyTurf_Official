@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BookMyTurf Admin | Admin Login</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* RESET & BASE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0D0D0D;
+      color: #FFFFFF;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      user-select: none;
+    }
+    a {
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+    a:hover,
+    a:focus-visible,
+    button:hover,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 2px solid #00D4FF;
+      outline-offset: 3px;
+    }
+    ::selection {
+      background: rgba(0, 212, 255, 0.22);
+    }
+
+    /* VARIABLES */
+    :root {
+      --accent-primary: #00D4FF;
+      --bg-secondary: #1A1A1A;
+      --radius-card: 16px;
+      --radius-input: 14px;
+      --radius-button: 16px;
+      --transition-fast: all 0.2s ease-in-out;
+      --text-muted: #666666;
+    }
+
+    /* CONTAINER */
+    .container {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-card);
+      padding: 48px 40px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 8px 40px rgba(0, 212, 255, 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      user-select: none;
+    }
+
+    /* HEADER */
+    .header {
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      color: var(--accent-primary);
+      user-select: text;
+    }
+    .subheader {
+      text-align: center;
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--text-muted);
+      user-select: text;
+    }
+
+    /* FORM */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 8px;
+      user-select: text;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      background: #262626;
+      border: 1.5px solid #404040;
+      border-radius: var(--radius-input);
+      padding: 14px 16px;
+      font-size: 16px;
+      color: #FFFFFF;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s ease;
+      width: 100%;
+    }
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: var(--accent-primary);
+      outline: none;
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+    }
+
+    /* PASSWORD FIELD WITH TOGGLE */
+    .password-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .password-wrapper input {
+      flex: 1;
+      padding-right: 44px;
+    }
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 18px;
+      user-select: none;
+      transition: color 0.2s ease;
+      background: none;
+      border: none;
+    }
+    .toggle-password:hover,
+    .toggle-password:focus {
+      color: var(--accent-primary);
+      outline: none;
+    }
+
+    /* BUTTON */
+    button.login-btn {
+      background-color: var(--accent-primary);
+      color: #000;
+      font-weight: 700;
+      font-size: 18px;
+      padding: 14px 0;
+      border-radius: var(--radius-button);
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+    button.login-btn:hover,
+    button.login-btn:focus {
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+      transform: scale(1.05);
+      outline: none;
+    }
+    button.login-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* FOOTER NOTE */
+    .footer-note {
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-muted);
+      user-select: none;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <main class="container" role="main" aria-label="Admin login form">
+    <h1 class="header">🏟️ BOOKMYTURF</h1>
+    <p class="subheader">ADMIN PORTAL</p>
+
+    <form novalidate>
+      <div>
+        <label for="admin-email">Admin Email</label>
+        <input id="admin-email" type="email" placeholder="📧 Enter admin email" autocomplete="email" required aria-required="true" />
+      </div>
+
+      <div>
+        <label for="admin-password">Password</label>
+        <div class="password-wrapper">
+          <input id="admin-password" type="password" placeholder="🔒 Enter password" autocomplete="current-password" required aria-required="true" />
+          <button type="button" class="toggle-password" aria-label="Toggle password visibility" tabindex="0">
+            <i class="fa-regular fa-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="login-btn" aria-label="Access admin panel">
+        ACCESS ADMIN PANEL
+      </button>
+    </form>
+
+    <p class="footer-note">🔒 Secure access for authorized personnel only</p>
+  </main>
+</body>
+</html>

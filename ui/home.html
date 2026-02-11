@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BookMyTurf | Home</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0D0D0D;
+      color: #FFFFFF;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    :root {
+      --accent: #00D4FF;
+      --bg-card: #1A1A1A;
+      --radius: 16px;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 42px;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    p.subtitle {
+      color: #B3B3B3;
+      font-size: 18px;
+      margin-bottom: 50px;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+
+    .action-card {
+      background: var(--bg-card);
+      padding: 30px 20px;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .action-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,212,255,0.15);
+      color: var(--accent);
+    }
+
+    .action-card i {
+      font-size: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+    }
+
+    .action-title {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .action-desc {
+      font-size: 14px;
+      color: #B3B3B3;
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="container" role="main" aria-label="BookMyTurf Home Page">
+
+    <h1>🏟️ BookMyTurf</h1>
+    <p class="subtitle">Find, book & manage sports turfs easily</p>
+
+    <section class="actions" aria-label="Main navigation">
+
+      <a href="browse.html" class="action-card" aria-label="Browse available turfs">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <div class="action-title">Browse Turfs</div>
+        <div class="action-desc">Search and book nearby turfs</div>
+      </a>
+
+      <a href="playerlogin.html" class="action-card" aria-label="Player login">
+        <i class="fa-regular fa-user"></i>
+        <div class="action-title">Player Login</div>
+        <div class="action-desc">Manage your bookings</div>
+      </a>
+
+      <a href="playerlogin.html" class="action-card" aria-label="Owner login">
+        <i class="fa-solid fa-user-tie"></i>
+        <div class="action-title">Owner Login</div>
+        <div class="action-desc">Manage your turfs & slots</div>
+      </a>
+
+      <a href="playerregistration.html" class="action-card" aria-label="Player registration">
+        <i class="fa-solid fa-user-plus"></i>
+        <div class="action-title">Player Register</div>
+        <div class="action-desc">Create a player account</div>
+      </a>
+
+      <a href="ownerregistration.html" class="action-card" aria-label="Owner registration">
+        <i class="fa-solid fa-building"></i>
+        <div class="action-title">Owner Register</div>
+        <div class="action-desc">List and manage your turf</div>
+      </a>
+
+    </section>
+
+    <footer>
+      © 2026 BookMyTurf · Built for academic project
+    </footer>
+
+  </main>
+
+</body>
+</html>

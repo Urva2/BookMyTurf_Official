@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BookMyTurf Owner | Dashboard</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* RESET & BASE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0D0D0D;
+      color: #FFFFFF;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 20px;
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    a {
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+    a:hover,
+    a:focus-visible {
+      color: #00D4FF;
+      outline: none;
+      text-decoration: underline;
+    }
+    ::selection {
+      background: rgba(0, 212, 255, 0.22);
+    }
+
+    /* VARIABLES */
+    :root {
+      --accent-primary: #00D4FF;
+      --bg-secondary: #1A1A1A;
+      --radius-card: 16px;
+      --radius-button: 16px;
+      --transition-fast: all 0.2s ease-in-out;
+      --text-muted: #666666;
+      --shadow-default: 0 8px 34px rgba(0, 0, 0, 0.45);
+      --shadow-hover: 0 22px 60px rgba(0, 212, 255, 0.1);
+      --shadow-button: 0 0 20px rgba(0, 212, 255, 0.4);
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-card);
+      padding: 40px 48px;
+      box-shadow: var(--shadow-default);
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    /* WELCOME */
+    .welcome {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      color: var(--accent-primary);
+      user-select: none;
+      margin-bottom: 8px;
+    }
+    .welcome-subtitle {
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--text-muted);
+      user-select: none;
+    }
+
+    /* STATS CARDS GRID */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      user-select: none;
+    }
+    .stat-card {
+      background: var(--bg-tertiary, #262626);
+      border-radius: var(--radius-card);
+      padding: 24px 20px;
+      box-shadow: var(--shadow-default);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      cursor: default;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+      border: 1px solid var(--accent-primary);
+    }
+    .stat-icon {
+      font-size: 36px;
+      color: var(--accent-primary);
+      user-select: none;
+    }
+    .stat-label {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-muted);
+      user-select: none;
+    }
+    .stat-value {
+      font-weight: 900;
+      font-size: 28px;
+      color: var(--text-primary);
+      user-select: none;
+    }
+    .stat-trend {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--accent-primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+    }
+    .stat-trend.up i {
+      color: #4ade80; /* green */
+    }
+
+    /* TODAY'S SCHEDULE */
+    .schedule-section {
+      user-select: none;
+    }
+    .schedule-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--accent-primary);
+    }
+    .schedule-list {
+      max-height: 320px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding-right: 8px;
+    }
+    .booking-item {
+      background: var(--bg-tertiary, #262626);
+      border-radius: var(--radius-card);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-default);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      transition: box-shadow 0.25s ease;
+      cursor: default;
+    }
+    .booking-item:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-4px);
+    }
+    .booking-time {
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--accent-primary);
+      min-width: 140px;
+      user-select: none;
+    }
+    .booking-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      user-select: none;
+    }
+    .booking-player {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text-primary);
+    }
+    .booking-contact {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .contact-button {
+      background: var(--accent-primary);
+      color: #000;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 6px 14px;
+      border-radius: var(--radius-button);
+      cursor: pointer;
+      border: none;
+      user-select: none;
+      transition: background-color 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .contact-button:hover,
+    .contact-button:focus {
+      background-color: #00b8ff;
+      outline: none;
+      text-decoration: none;
+    }
+    .contact-button i {
+      font-size: 14px;
+    }
+    .more-bookings {
+      margin-top: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-muted);
+      user-select: none;
+      text-align: center;
+    }
+
+    /* QUICK ACTIONS */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      user-select: none;
+    }
+    .quick-action {
+      background: var(--bg-tertiary, #262626);
+      border-radius: var(--radius-card);
+      padding: 32px 20px;
+      box-shadow: var(--shadow-default);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+      text-align: center;
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .quick-action:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-6px);
+      color: var(--accent-primary);
+    }
+    .quick-action i {
+      font-size: 36px;
+      color: inherit;
+    }
+
+    /* SECOND ROW QUICK ACTIONS */
+    .quick-actions-row2 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 24px;
+      user-select: none;
+    }
+    .quick-action-row2 {
+      background: var(--bg-tertiary, #262626);
+      border-radius: var(--radius-card);
+      padding: 32px 20px;
+      box-shadow: var(--shadow-default);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+      text-align: center;
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .quick-action-row2:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-6px);
+      color: var(--accent-primary);
+    }
+    .quick-action-row2 i {
+      font-size: 36px;
+      color: inherit;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .quick-actions,
+      .quick-actions-row2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .quick-actions,
+      .quick-actions-row2 {
+        grid-template-columns: 1fr;
+      }
+
+      .dashboard-actions{
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 30px 0;
+}
+.dashboard-actions a{
+  text-decoration: none;
+}
+    }
+  </style>
+</head>
+<body>
+  <main class="container" role="main" aria-label="Owner Dashboard">
+
+    <section class="welcome-section" aria-label="Welcome message">
+      <p class="welcome">Welcome back, Rahul! 👋</p>
+      <p class="welcome-subtitle">Here's your turf performance overview</p>
+    </section>
+    <section class="dashboard-actions" aria-label="Owner dashboard actions">
+
+  <a href="addturf.html" class="btn-primary">
+    ➕ Add Turf
+  </a>
+
+  <a href="turfmanagement.html" class="btn-primary">
+    🏟️ Manage Turfs
+  </a>
+
+  <a href="slotmanagement.html" class="btn-primary">
+    ⏱️ Manage Slots
+  </a>
+
+</section>
+
+    <!-- Stats Cards -->
+    <section class="stats-grid" aria-label="Performance statistics">
+      <article class="stat-card" tabindex="0" aria-label="Total bookings: 124, up 12 percent">
+        <i class="fa-solid fa-chart-simple stat-icon" aria-hidden="true"></i>
+        <div class="stat-label">Total Bookings</div>
+        <div class="stat-value">124</div>
+        <div class="stat-trend up"><i class="fa-solid fa-arrow-up"></i> ↑ 12%</div>
+      </article>
+      <article class="stat-card" tabindex="0" aria-label="Today's bookings: 8, 2 more than yesterday">
+        <i class="fa-regular fa-calendar-days stat-icon" aria-hidden="true"></i>
+        <div class="stat-label">Today's Bookings</div>
+        <div class="stat-value">8</div>
+        <div class="stat-trend up"><i class="fa-solid fa-arrow-up"></i> ↑ 2 more</div>
+      </article>
+      <article class="stat-card" tabindex="0" aria-label="This month's revenue: 45,200 rupees, up 18 percent">
+        <i class="fa-solid fa-money-bill-wave stat-icon" aria-hidden="true"></i>
+        <div class="stat-label">This Month Revenue</div>
+        <div class="stat-value">₹45,200</div>
+        <div class="stat-trend up"><i class="fa-solid fa-arrow-up"></i> ↑ 18%</div>
+      </article>
+      <article class="stat-card" tabindex="0" aria-label="Average rating: 4.8, up 0.2">
+        <i class="fa-solid fa-star stat-icon" aria-hidden="true"></i>
+        <div class="stat-label">Average Rating</div>
+        <div class="stat-value">4.8</div>
+        <div class="stat-trend up"><i class="fa-solid fa-arrow-up"></i> ↑ 0.2</div>
+      </article>
+    </section>
+
+    <!-- Today's Schedule -->
+    <section class="schedule-section" aria-label="Today's schedule">
+      <div class="schedule-header">
+        <h2>📅 TODAY'S SCHEDULE</h2>
+        <a href="full-calendar.html" class="nav-link" aria-label="View full calendar">View Full Calendar</a>
+      </div>
+      <div class="schedule-list" tabindex="0" role="list">
+        <article class="booking-item" role="listitem" tabindex="0" aria-label="7:00 AM to 8:00 AM football booking by Rahul Sharma, contact +91 98765 43210, status confirmed">
+          <div class="booking-time">🕐 7:00 AM - 8:00 AM</div>
+          <div class="booking-details">
+            <div class="booking-player">Rahul Sharma</div>
+            <div class="booking-contact">
+              📱 +91 98765 43210
+              <a href="tel:+919876543210" class="contact-button" aria-label="Contact Rahul Sharma">
+                <i class="fa-solid fa-phone"></i> Contact
+              </a>
+            </div>
+            <div class="booking-status" style="font-weight:700; color: var(--accent-primary); user-select:none;">Status: CONFIRMED</div>
+          </div>
+        </article>
+        <article class="booking-item" role="listitem" tabindex="0" aria-label="9:00 AM to 10:00 AM cricket booking by Priya Patel, contact +91 87654 32109, status confirmed">
+          <div class="booking-time">🕐 9:00 AM - 10:00 AM</div>
+          <div class="booking-details">
+            <div class="booking-player">Priya Patel</div>
+            <div class="booking-contact">
+              📱 +91 87654 32109
+              <a href="tel:+918765432109" class="contact-button" aria-label="Contact Priya Patel">
+                <i class="fa-solid fa-phone"></i> Contact
+              </a>
+            </div>
+            <div class="booking-status" style="font-weight:700; color: var(--accent-primary); user-select:none;">Status: CONFIRMED</div>
+          </div>
+        </article>
+        <article class="booking-item" role="listitem" tabindex="0" aria-label="5:00 PM to 6:00 PM football booking by Amit Kumar, contact +91 76543 21098, status confirmed">
+          <div class="booking-time">🕐 5:00 PM - 6:00 PM</div>
+          <div class="booking-details">
+            <div class="booking-player">Amit Kumar</div>
+            <div class="booking-contact">
+              📱 +91 76543 21098
+              <a href="tel:+917654321098" class="contact-button" aria-label="Contact Amit Kumar">
+                <i class="fa-solid fa-phone"></i> Contact
+              </a>
+            </div>
+            <div class="booking-status" style="font-weight:700; color: var(--accent-primary); user-select:none;">Status: CONFIRMED</div>
+          </div>
+        </article>
+      </div>
+      <p class="more-bookings" aria-live="polite" aria-atomic="true">+ 5 more bookings today</p>
+    </section>
+
+    <!-- Quick Actions -->
+    <section aria-label="Quick actions">
+      <div class="quick-actions">
+        <div class="quick-action" tabindex="0" role="button" aria-label="Manage Bookings">
+          <i class="fa-regular fa-calendar-check"></i>
+          <span>📅 Manage Bookings</span>
+        </div>
+        <a href="slotmanagement.html" class="quick-action" aria-label="Manage Slots">
+  <i class="fa-regular fa-clock"></i>
+  <span>🕐 Manage Slots</span>
+</a>
+
+        <div class="quick-action" tabindex="0" role="button" aria-label="View Analytics">
+          <i class="fa-solid fa-chart-simple"></i>
+          <span>📊 View Analytics</span>
+        </div>
+      </div>
+      <div class="quick-actions-row2">
+        <div class="quick-action-row2" tabindex="0" role="button" aria-label="Edit Turf Info">
+          <i class="fa-solid fa-pen"></i>
+          <span>✏️ Edit Turf Info</span>
+        </div>
+        <div class="quick-action-row2" tabindex="0" role="button" aria-label="Pricing Settings">
+          <i class="fa-solid fa-money-bill-wave"></i>
+          <span>💰 Pricing Settings</span>
+        </div>
+        <div class="quick-action-row2" tabindex="0" role="button" aria-label="Update Gallery">
+          <i class="fa-solid fa-camera"></i>
+          <span>📸 Update Gallery</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BookMyTurf Owner | Verification Status</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* RESET & BASE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0D0D0D;
+      color: #FFFFFF;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 20px;
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    a {
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+    a:hover,
+    a:focus-visible {
+      color: #00D4FF;
+      outline: none;
+      text-decoration: underline;
+    }
+    ::selection {
+      background: rgba(0, 212, 255, 0.22);
+    }
+
+    /* VARIABLES */
+    :root {
+      --accent-primary: #00D4FF;
+      --bg-secondary: #1A1A1A;
+      --radius-card: 16px;
+      --radius-button: 16px;
+      --transition-fast: all 0.2s ease-in-out;
+      --text-muted: #666666;
+
+      --status-pending: #FFB800;
+      --status-approved: #00D4FF;
+      --status-rejected: #FF4757;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 900px;
+      width: 100%;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-card);
+      padding: 40px 48px;
+      box-shadow: 0 8px 40px rgba(0, 212, 255, 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* BACK LINK */
+    .back-link {
+      color: var(--accent-primary);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      width: fit-content;
+      margin-bottom: 8px;
+    }
+    .back-link i {
+      font-size: 14px;
+    }
+    .back-link:hover,
+    .back-link:focus {
+      color: #00D4FF;
+      text-decoration: underline;
+      outline: none;
+    }
+
+    /* PAGE TITLE */
+    h1.page-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: var(--accent-primary);
+      user-select: none;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    /* STATUS SECTION */
+    .status-section {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    /* STATUS CARD */
+    .status-card {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-card);
+      box-shadow: 0 6px 30px rgba(0, 212, 255, 0.12);
+      padding: 24px 32px;
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      border: 1px solid transparent;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    .status-card:hover {
+      box-shadow: 0 12px 60px rgba(0, 212, 255, 0.18);
+      transform: translateY(-4px);
+    }
+
+    /* Status variants */
+    .status-pending {
+      border-color: var(--status-pending);
+    }
+    .status-approved {
+      border-color: var(--status-approved);
+    }
+    .status-rejected {
+      border-color: var(--status-rejected);
+    }
+
+    /* Turf Image */
+    .turf-image {
+      width: 120px;
+      height: 90px;
+      background: linear-gradient(135deg, #004a6d, #007bbf);
+      border-radius: var(--radius-card);
+      box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.15);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 14px;
+      user-select: none;
+    }
+
+    /* Turf Info */
+    .turf-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .turf-name {
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--accent-primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .turf-location {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .turf-status {
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+    }
+    .turf-status.pending {
+      color: var(--status-pending);
+    }
+    .turf-status.approved {
+      color: var(--status-approved);
+    }
+    .turf-status.rejected {
+      color: var(--status-rejected);
+    }
+    .turf-status i {
+      font-size: 18px;
+    }
+
+    /* Status Details Box */
+    .status-details {
+      background: var(--bg-tertiary, #262626);
+      border-radius: var(--radius-card);
+      padding: 20px 24px;
+      font-size: 15px;
+      color: var(--text-primary);
+      line-height: 1.4;
+      user-select: text;
+      white-space: pre-line;
+    }
+    .status-details strong {
+      color: var(--accent-primary);
+    }
+    .status-list {
+      margin-top: 12px;
+      list-style: none;
+      padding-left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .status-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .status-list li.completed i {
+      color: var(--status-approved);
+    }
+    .status-list li.pending i {
+      color: var(--status-pending);
+    }
+
+    /* ACTIONS */
+    .actions {
+      margin-top: 16px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .actions a {
+      background: transparent;
+      border: 1.5px solid var(--accent-primary);
+      color: var(--accent-primary);
+      padding: 10px 20px;
+      border-radius: var(--radius-button);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .actions a:hover,
+    .actions a:focus {
+      background: var(--accent-primary);
+      color: #000;
+      box-shadow: 0 0 20px var(--accent-primary);
+      outline: none;
+    }
+    .actions a i {
+      font-size: 14px;
+    }
+
+    /* ADD NEW TURF BUTTON */
+    .add-new-turf {
+      margin-top: 48px;
+      text-align: center;
+    }
+    .add-new-turf a {
+      background: var(--accent-primary);
+      color: #000;
+      font-weight: 700;
+      font-size: 18px;
+      padding: 14px 48px;
+      border-radius: var(--radius-button);
+      cursor: pointer;
+      box-shadow: var(--shadow-button);
+      transition: all 0.25s ease;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .add-new-turf a:hover,
+    .add-new-turf a:focus {
+      box-shadow: 0 0 40px var(--accent-primary);
+      transform: scale(1.05);
+      outline: none;
+    }
+    .add-new-turf a:active {
+      transform: scale(0.98);
+    }
+    .add-new-turf a i {
+      font-size: 20px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      .status-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .turf-image {
+        width: 100%;
+        height: 140px;
+        margin-bottom: 16px;
+      }
+      .actions {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container" role="main" aria-label="Verification Status Page">
+
+    <a href="dashboard.html" class="back-link" aria-label="Back to Dashboard">
+      <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+    </a>
+
+    <h1 class="page-title">My Turfs</h1>
+
+    <section class="status-section" aria-label="Turf verification statuses">
+
+      <!-- PENDING VERIFICATION -->
+      <article class="status-card status-pending" aria-labelledby="pending-title" role="region">
+        <div class="turf-image" aria-hidden="true">IMG</div>
+        <div class="turf-info">
+          <h2 id="pending-title" class="turf-name">Green Arena Sports</h2>
+          <div class="turf-location"><i class="fa-solid fa-location-dot"></i> Andheri West, Mumbai</div>
+          <div class="turf-status pending"><i class="fa-solid fa-hourglass-half"></i> Status: ⏳ PENDING</div>
+
+          <div class="status-details" aria-live="polite" aria-atomic="true">
+            ⏳ Verification in Progress
+
+            Your turf submission is being reviewed by our admin team.
+
+            Submitted: Jan 7, 2026 at 10:30 AM
+            Expected Review: Within 24-48 hours
+
+            Progress:
+            <ul class="status-list" aria-label="Verification progress">
+              <li class="completed"><i class="fa-solid fa-check"></i> Documents Uploaded</li>
+              <li class="completed"><i class="fa-solid fa-check"></i> Basic Details Verified</li>
+              <li class="pending"><i class="fa-solid fa-circle"></i> Admin Review</li>
+              <li class="pending"><i class="fa-solid fa-circle"></i> Final Approval</li>
+            </ul>
+          </div>
+
+          <div class="actions">
+            <a href="submission-view.html" aria-label="View submission details for Green Arena Sports"><i class="fa-solid fa-eye"></i> View Submission</a>
+            <a href="edit-details.html" aria-label="Edit details for Green Arena Sports"><i class="fa-solid fa-pen"></i> Edit Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- APPROVED -->
+      <article class="status-card status-approved" aria-labelledby="approved-title" role="region">
+        <div class="turf-image" aria-hidden="true">IMG</div>
+        <div class="turf-info">
+          <h2 id="approved-title" class="turf-name">Sports Hub Arena</h2>
+          <div class="turf-location"><i class="fa-solid fa-location-dot"></i> Bandra East, Mumbai</div>
+          <div class="turf-status approved"><i class="fa-solid fa-check"></i> ✓ VERIFIED & LIVE</div>
+
+          <div class="status-details" aria-live="polite" aria-atomic="true">
+            ✓ Your turf is now LIVE!
+
+            Players can now discover and book your turf on BookMyTurf.
+
+            Approved on: Jan 5, 2026
+            Total Bookings: 24
+          </div>
+
+          <div class="actions">
+            <a href="manage-slots.html" aria-label="Manage slots for Sports Hub Arena"><i class="fa-solid fa-calendar-days"></i> Manage Slots</a>
+            <a href="view-bookings.html" aria-label="View bookings for Sports Hub Arena"><i class="fa-solid fa-list-check"></i> View Bookings</a>
+            <a href="analytics.html" aria-label="View analytics for Sports Hub Arena"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- REJECTED -->
+      <article class="status-card status-rejected" aria-labelledby="rejected-title" role="region">
+        <div class="turf-image" aria-hidden="true">IMG</div>
+        <div class="turf-info">
+          <h2 id="rejected-title" class="turf-name">Game Zone Turf</h2>
+          <div class="turf-location"><i class="fa-solid fa-location-dot"></i> Juhu, Mumbai</div>
+          <div class="turf-status rejected"><i class="fa-solid fa-xmark"></i> ✗ REJECTED</div>
+
+          <div class="status-details" aria-live="polite" aria-atomic="true">
+            ✗ Verification Unsuccessful
+
+            Reason for Rejection:
+            "The ownership documents provided are unclear. Please upload clear scanned copies of the rental agreement with proper signatures visible."
+
+            Rejected on: Jan 6, 2026
+          </div>
+
+          <div class="actions">
+            <a href="resubmit.html" aria-label="Resubmit Game Zone Turf with corrections"><i class="fa-solid fa-arrow-rotate-left"></i> Resubmit with Corrections</a>
+            <a href="contact-support.html" aria-label="Contact support for Game Zone Turf"><i class="fa-solid fa-headset"></i> Contact Support</a>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <div class="add-new-turf">
+      <a href="add-new-turf.html" aria-label="Add new turf">
+        <i class="fa-solid fa-plus"></i> Add New Turf
+      </a>
+    </div>
+
+  </main>
+</body>
+</html>

@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BookMyTurf Owner | Add New Turf</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* RESET & BASE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0D0D0D;
+      color: #FFFFFF;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 20px;
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    a {
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+    a:hover,
+    a:focus-visible {
+      color: #00D4FF;
+      outline: none;
+      text-decoration: underline;
+    }
+    ::selection {
+      background: rgba(0, 212, 255, 0.22);
+    }
+
+    /* VARIABLES */
+    :root {
+      --accent-primary: #00D4FF;
+      --bg-secondary: #1A1A1A;
+      --radius-card: 16px;
+      --radius-input: 14px;
+      --radius-button: 16px;
+      --transition-fast: all 0.2s ease-in-out;
+      --text-muted: #666666;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 900px;
+      width: 100%;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-card);
+      padding: 40px 48px;
+      box-shadow: 0 8px 40px rgba(0, 212, 255, 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* BACK LINK */
+    .back-link {
+      color: var(--accent-primary);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      width: fit-content;
+      margin-bottom: 8px;
+    }
+    .back-link i {
+      font-size: 14px;
+    }
+    .back-link:hover,
+    .back-link:focus {
+      color: #00D4FF;
+      text-decoration: underline;
+      outline: none;
+    }
+
+    /* PAGE TITLE */
+    h1.page-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: var(--accent-primary);
+      user-select: none;
+      margin-bottom: 4px;
+    }
+    p.page-subtitle {
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--text-muted);
+      user-select: none;
+      margin-bottom: 24px;
+    }
+
+    /* IMPORTANT NOTE BOX */
+    .important-note {
+      background: #2a2a2a;
+      border-left: 4px solid var(--accent-primary);
+      padding: 16px 20px;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--accent-primary);
+      user-select: none;
+      margin-bottom: 32px;
+      border-radius: 8px;
+    }
+    .important-note i {
+      margin-right: 8px;
+    }
+
+    /* FORM */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* FORM GROUPS */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    label {
+      font-weight: 600;
+      font-size: 14px;
+      user-select: text;
+    }
+    input[type="text"],
+    input[type="url"],
+    textarea {
+      background: #262626;
+      border: 1.5px solid #404040;
+      border-radius: var(--radius-input);
+      padding: 14px 16px;
+      font-size: 16px;
+      color: #FFFFFF;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s ease;
+      resize: vertical;
+    }
+    input[type="text"]:focus,
+    input[type="url"]:focus,
+    textarea:focus {
+      border-color: var(--accent-primary);
+      outline: none;
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+    }
+    textarea {
+      min-height: 100px;
+      max-height: 180px;
+    }
+
+    /* INLINE GROUPS */
+    .inline-group {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .inline-group .form-group {
+      flex: 1 1 200px;
+    }
+
+    /* FACILITIES CHECKBOXES */
+    .facilities-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px 24px;
+      margin-top: 8px;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      user-select: none;
+      color: var(--text-primary);
+      transition: color 0.2s ease;
+    }
+    .checkbox-label:hover {
+      color: var(--accent-primary);
+    }
+    .checkbox-label input[type="checkbox"] {
+      accent-color: var(--accent-primary);
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ADDITIONAL FACILITIES */
+    .additional-facilities {
+      margin-top: 8px;
+    }
+
+    /* IMAGE UPLOAD */
+    .image-upload {
+      border: 2px dashed var(--accent-primary);
+      border-radius: var(--radius-card);
+      padding: 32px;
+      text-align: center;
+      color: var(--accent-primary);
+      font-weight: 600;
+      font-size: 16px;
+      cursor: default;
+      user-select: none;
+      margin-bottom: 12px;
+    }
+    .image-upload p {
+      margin-top: 12px;
+      font-weight: 400;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* UPLOADED IMAGES */
+    .uploaded-images {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .uploaded-image {
+      position: relative;
+      width: 96px;
+      height: 72px;
+      background: #404040;
+      border-radius: var(--radius-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-muted);
+      user-select: none;
+    }
+    .uploaded-image .remove-icon {
+      position: absolute;
+      top: 4px;
+      right: 6px;
+      color: #FF4757;
+      font-size: 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* TEXTAREA URLS */
+    .image-urls {
+      width: 100%;
+      background: #262626;
+      border: 1.5px solid #404040;
+      border-radius: var(--radius-input);
+      padding: 14px 16px;
+      font-size: 14px;
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      resize: vertical;
+      min-height: 80px;
+      font-weight: 500;
+      transition: border-color 0.2s ease;
+    }
+    .image-urls:focus {
+      border-color: var(--accent-primary);
+      outline: none;
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+    }
+
+    /* DOCUMENTS UPLOAD */
+    .documents-section {
+      margin-top: 32px;
+    }
+    .documents-section h2 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--accent-primary);
+      margin-bottom: 16px;
+      user-select: none;
+    }
+    .document-group {
+      margin-bottom: 24px;
+    }
+    .document-label {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 8px;
+      user-select: text;
+    }
+    .document-upload {
+      border: 2px dashed var(--accent-primary);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      text-align: center;
+      color: var(--accent-primary);
+      font-weight: 600;
+      font-size: 16px;
+      cursor: default;
+      user-select: none;
+    }
+    .document-upload span {
+      display: block;
+      margin-top: 8px;
+      font-weight: 400;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .document-upload .file-name {
+      margin-top: 6px;
+      font-weight: 700;
+      color: #00D4FF;
+      user-select: text;
+    }
+
+    /* SUBMIT BUTTON */
+    .submit-btn {
+      background-color: var(--accent-primary);
+      color: #000;
+      font-weight: 700;
+      font-size: 20px;
+      padding: 18px 0;
+      border-radius: var(--radius-button);
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      user-select: none;
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto;
+      display: block;
+    }
+    .submit-btn:hover,
+    .submit-btn:focus {
+      box-shadow: 0 0 40px var(--accent-primary);
+      transform: scale(1.05);
+      outline: none;
+    }
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* INFO NOTE */
+    .info-note {
+      margin-top: 24px;
+      font-size: 14px;
+      color: var(--text-muted);
+      text-align: center;
+      user-select: none;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      .inline-group {
+        flex-direction: column;
+      }
+      .inline-group .form-group {
+        flex: 1 1 100%;
+      }
+      .uploaded-images {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container" role="main" aria-label="Add New Turf Form">
+
+    <a href="dashboard.html" class="back-link" aria-label="Back to Dashboard">
+      <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+    </a>
+
+    <h1 class="page-title">Add New Turf</h1>
+    <p class="page-subtitle">Submit your turf details for admin verification and listing approval</p>
+
+    <div class="important-note" role="alert" aria-live="assertive">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      Your turf will remain <strong>UNLISTED</strong> until verified by our admin team (usually within 24-48 hours)
+    </div>
+
+    <form action="turfmanagement.html" method="get" novalidate>
+
+
+      <!-- Basic Turf Information -->
+      <section aria-labelledby="basic-info-title">
+        <h2 id="basic-info-title" class="sr-only">Basic Turf Information</h2>
+
+        <div class="form-group">
+          <label for="turf-name">Turf Name *</label>
+          <input type="text" id="turf-name" name="turf-name" placeholder="e.g., Green Arena Sports Complex" required aria-required="true" />
+        </div>
+
+        <div class="inline-group">
+          <div class="form-group">
+            <label for="city">City *</label>
+            <input type="text" id="city" name="city" placeholder="e.g., Mumbai" required aria-required="true" />
+          </div>
+          <div class="form-group">
+            <label for="state">State *</label>
+            <input type="text" id="state" name="state" placeholder="e.g., Maharashtra" required aria-required="true" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="address">Full Address *</label>
+          <input type="text" id="address" name="address" placeholder="Enter complete address with landmarks" required aria-required="true" />
+        </div>
+
+        <div class="form-group">
+          <label for="google-maps-url">Google Maps URL</label>
+          <input type="url" id="google-maps-url" name="google-maps-url" placeholder="https://maps.google.com/..." aria-describedby="maps-info" />
+          <small id="maps-info" style="color: var(--text-muted); font-size: 13px; user-select:none;">ℹ️ Paste the shareable link from Google Maps</small>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description *</label>
+          <textarea id="description" name="description" maxlength="500" placeholder="Describe your turf - surface type, unique features, nearby landmarks..." required aria-required="true"></textarea>
+          <small style="color: var(--text-muted); font-size: 13px; user-select:none;">0/500 characters</small>
+        </div>
+      </section>
+
+      <!-- Facilities & Amenities -->
+      <section aria-labelledby="facilities-title">
+        <h2 id="facilities-title" class="sr-only">Facilities and Amenities</h2>
+
+        <div class="facilities-group" role="group" aria-label="Select facilities and amenities">
+          <label class="checkbox-label"><input type="checkbox" name="facilities" value="parking" /> ☑ Parking</label>
+          <label class="checkbox-label"><input type="checkbox" name="facilities" value="floodlights" /> ☑ Floodlights</label>
+          <label class="checkbox-label"><input type="checkbox" name="facilities" value="changing-room" /> ☐ Changing Room</label>
+          <label class="checkbox-label"><input type="checkbox" name="facilities" value="washroom" /> ☐ Washroom</label>
+          <label class="checkbox-label"><input type="checkbox" name="facilities" value="drinking-water" /> ☐ Drinking Water</label>
+          <label class="checkbox-label"><input type="checkbox" name="facilities" value="first-aid" /> ☐ First Aid</label>
+          <label class="checkbox-label"><input type="checkbox" name="facilities" value="cafeteria" /> ☐ Cafeteria</label>
+          <label class="checkbox-label"><input type="checkbox" name="facilities" value="wifi" /> ☐ WiFi</label>
+          <label class="checkbox-label"><input type="checkbox" name="facilities" value="equipment-rental" /> ☐ Equipment Rental</label>
+          <label class="checkbox-label"><input type="checkbox" name="facilities" value="showers" /> ☐ Showers</label>
+          <label class="checkbox-label"><input type="checkbox" name="facilities" value="seating-area" /> ☐ Seating Area</label>
+          <label class="checkbox-label"><input type="checkbox" name="facilities" value="cctv" /> ☐ CCTV Surveillance</label>
+        </div>
+
+        <div class="form-group additional-facilities">
+          <label for="additional-facilities">Additional Facilities (comma separated)</label>
+          <input type="text" id="additional-facilities" name="additional-facilities" placeholder="e.g., Referee service, Ball rental, Coaching" />
+        </div>
+      </section>
+
+      <!-- Turf Images -->
+      <section aria-labelledby="turf-images-title">
+        <h2 id="turf-images-title" class="sr-only">Turf Images</h2>
+
+        <div class="image-upload" aria-label="Drag and drop turf images or browse files">
+          <p>📁 DRAG & DROP or <button type="button" style="background:none; border:none; color: var(--accent-primary); cursor:pointer; font-weight:700; text-decoration:underline;">Browse Files</button></p>
+          <p style="font-weight: 400; font-size: 14px; margin-top: 12px; user-select:none;">Supported: PNG, JPG, WEBP | Max: 5MB each<br />Upload 3-10 images showing different angles</p>
+        </div>
+
+        <div class="uploaded-images" aria-label="Uploaded turf images">
+          <div class="uploaded-image" aria-label="Image 1">IMG 1 <span class="remove-icon" aria-hidden="true">✕</span></div>
+          <div class="uploaded-image" aria-label="Image 2">IMG 2 <span class="remove-icon" aria-hidden="true">✕</span></div>
+          <div class="uploaded-image" aria-label="Image 3">IMG 3 <span class="remove-icon" aria-hidden="true">✕</span></div>
+        </div>
+
+        <label for="image-urls" style="font-weight:600; font-size:14px; user-select:text;">Or paste image URLs (one per line):</label>
+        <textarea id="image-urls" name="image-urls" class="image-urls" placeholder="https://example.com/image1.jpg"></textarea>
+      </section>
+
+      <!-- Government Verification Documents -->
+      <section class="documents-section" aria-labelledby="documents-title">
+        <h2 id="documents-title">Government Verification Documents</h2>
+        <p style="color: var(--text-muted); font-size: 14px; user-select:none; margin-bottom: 24px;">
+          ⚠️ These documents are required for admin verification and will <strong>NOT</strong> be visible to players
+        </p>
+
+        <div class="document-group">
+          <label for="identity-proof" class="document-label">Identity Proof * (Aadhaar/PAN/Driving License)</label>
+          <div class="document-upload" aria-label="Upload identity proof document">
+            <p>📎 Choose file or drag & drop</p>
+            <p class="file-name" aria-live="polite" aria-atomic="true">identity_proof.pdf ✓</p>
+          </div>
+          <input type="file" id="identity-proof" name="identity-proof" accept=".pdf,.jpg,.jpeg,.png" aria-required="true" hidden />
+        </div>
+
+        <div class="document-group">
+          <label for="ownership-agreement" class="document-label">Turf Ownership/Rental Agreement *</label>
+          <div class="document-upload" aria-label="Upload turf ownership or rental agreement document">
+            <p>📎 Choose file or drag & drop</p>
+          </div>
+          <input type="file" id="ownership-agreement" name="ownership-agreement" accept=".pdf,.jpg,.jpeg,.png" aria-required="true" hidden />
+        </div>
+
+        <div class="document-group">
+          <label for="permission" class="document-label">Municipal/Sports Authority Permission *</label>
+          <div class="document-upload" aria-label="Upload municipal or sports authority permission document">
+            <p>📎 Choose file or drag & drop</p>
+          </div>
+          <input type="file" id="permission" name="permission" accept=".pdf,.jpg,.jpeg,.png" aria-required="true" hidden />
+        </div>
+
+        <div class="document-group">
+          <label for="gst-certificate" class="document-label">GST Certificate (Optional)</label>
+          <div class="document-upload" aria-label="Upload GST certificate document">
+            <p>📎 Choose file or drag & drop</p>
+          </div>
+          <input type="file" id="gst-certificate" name="gst-certificate" accept=".pdf,.jpg,.jpeg,.png" hidden />
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 13px; user-select:none;">
+          Supported: PDF, JPG, PNG | Max: 10MB each
+        </p>
+      </section>
+
+      <button type="submit" class="submit-btn" aria-label="Submit turf for verification">
+        🚀 SUBMIT FOR VERIFICATION
+      </button>
+
+      <p class="info-note" aria-live="polite" aria-atomic="true">
+        ℹ️ Verification typically takes 24-48 hours. You'll be notified via email once your turf is approved.
+      </p>
+    </form>
+  </main>
+</body>
+</html>

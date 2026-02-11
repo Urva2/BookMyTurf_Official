@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BookMyTurf Admin | Turf Verification Panel</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* RESET & BASE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0D0D0D;
+      color: #FFFFFF;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 20px;
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    a {
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+    a:hover,
+    a:focus-visible,
+    button:hover,
+    button:focus-visible,
+    select:focus-visible,
+    input:focus-visible {
+      outline: 2px solid #00D4FF;
+      outline-offset: 3px;
+    }
+    ::selection {
+      background: rgba(0, 212, 255, 0.22);
+    }
+
+    /* VARIABLES */
+    :root {
+      --accent-primary: #00D4FF;
+      --bg-secondary: #1A1A1A;
+      --radius-card: 16px;
+      --radius-button: 16px;
+      --radius-input: 12px;
+      --transition-fast: all 0.2s ease-in-out;
+      --text-muted: #666666;
+      --shadow-default: 0 8px 34px rgba(0, 212, 255, 0.15);
+      --shadow-hover: 0 22px 60px rgba(0, 212, 255, 0.3);
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 900px;
+      width: 100%;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-card);
+      padding: 40px 48px;
+      box-shadow: var(--shadow-default);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* PAGE TITLE */
+    h1.page-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: var(--accent-primary);
+      user-select: none;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    /* TAB NAVIGATION */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      user-select: none;
+      margin-bottom: 24px;
+    }
+    .tab {
+      padding: 12px 24px;
+      font-weight: 700;
+      font-size: 16px;
+      border-radius: var(--radius-button);
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-muted);
+      border: 2px solid transparent;
+      transition: all 0.25s ease;
+      user-select: none;
+    }
+    .tab.active,
+    .tab:hover,
+    .tab:focus {
+      background: var(--accent-primary);
+      color: #000;
+      border-color: var(--accent-primary);
+      outline: none;
+    }
+
+    /* SEARCH & FILTER */
+    .search-filter {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      user-select: none;
+    }
+    .search-filter input[type="search"] {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: var(--radius-input);
+      border: 1.5px solid #404040;
+      background: #262626;
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 16px;
+      transition: border-color 0.2s ease;
+    }
+    .search-filter input[type="search"]:focus {
+      border-color: var(--accent-primary);
+      outline: none;
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+    }
+    .filter-select {
+      background: #262626;
+      border: 1.5px solid #404040;
+      border-radius: var(--radius-input);
+      padding: 12px 16px;
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+      min-width: 140px;
+    }
+    .filter-select:focus {
+      border-color: var(--accent-primary);
+      outline: none;
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+    }
+
+    /* PENDING REVIEW CARD */
+    .pending-card {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-card);
+      padding: 24px 32px;
+      box-shadow: var(--shadow-default);
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      user-select: none;
+      transition: box-shadow 0.25s ease;
+      cursor: default;
+    }
+    .pending-card:hover,
+    .pending-card:focus-within {
+      box-shadow: var(--shadow-hover);
+      outline: none;
+    }
+    .turf-image {
+      width: 120px;
+      height: 90px;
+      background: linear-gradient(135deg, #004a6d, #007bbf);
+      border-radius: var(--radius-card);
+      box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.15);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 14px;
+      user-select: none;
+    }
+    .pending-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      color: var(--text-primary);
+    }
+    .turf-name {
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--accent-primary);
+      user-select: none;
+    }
+    .turf-location {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+    }
+    .owner-info {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      user-select: none;
+    }
+    .submitted-info {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      user-select: none;
+    }
+    .review-button {
+      background: var(--accent-primary);
+      color: #000;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 12px 28px;
+      border-radius: var(--radius-button);
+      cursor: pointer;
+      border: none;
+      user-select: none;
+      transition: background-color 0.25s ease;
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .review-button:hover,
+    .review-button:focus {
+      background-color: #00b8ff;
+      outline: none;
+      text-decoration: none;
+    }
+    .review-button i {
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <main class="container" role="main" aria-label="Turf Verification Panel">
+
+    <h1 class="page-title">TURF VERIFICATION PANEL</h1>
+
+    <nav class="tabs" role="tablist" aria-label="Verification status tabs">
+      <button class="tab active" role="tab" aria-selected="true" tabindex="0" aria-controls="pending-panel" id="pending-tab">Pending (12)</button>
+      <button class="tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="approved-panel" id="approved-tab">Approved (42)</button>
+      <button class="tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="rejected-panel" id="rejected-tab">Rejected (6)</button>
+    </nav>
+
+    <section class="search-filter" aria-label="Search and filter turfs">
+      <input type="search" placeholder="🔍 Search turfs..." aria-label="Search turfs" />
+      <select class="filter-select" aria-label="Filter turfs by status">
+        <option selected>All</option>
+        <option>Pending</option>
+        <option>Approved</option>
+        <option>Rejected</option>
+      </select>
+    </section>
+
+    <section id="pending-panel" role="tabpanel" aria-labelledby="pending-tab" tabindex="0">
+      <article class="pending-card" tabindex="0" aria-label="Pending review for Green Arena Sports turf in Andheri West, Mumbai, owner Rahul Sharma, email rahul@email.com, phone +91 98765 43210, submitted Jan 7, 2026 at 10:30 AM, 2 hours ago">
+        <div class="turf-image" aria-hidden="true">IMG</div>
+        <div class="pending-info">
+          <h2 class="turf-name">GREEN ARENA SPORTS</h2>
+          <div class="turf-location"><i class="fa-solid fa-location-dot"></i> Andheri West, Mumbai</div>
+          <div class="owner-info">
+            <span>👤 Owner: Rahul Sharma</span>
+            <span>📧 rahul@email.com</span>
+            <span>📱 +91 98765 43210</span>
+          </div>
+          <div class="submitted-info">Submitted: Jan 7, 2026 at 10:30 AM (2 hours ago)</div>
+          <a href="review-details.html?id=green-arena" class="review-button" aria-label="Review full details of Green Arena Sports">
+            <i class="fa-solid fa-eye"></i> Review Full Details
+          </a>
+        </div>
+      </article>
+    </section>
+
+  </main>
+  
+</html>

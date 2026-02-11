@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BookMyTurf Admin | Dashboard</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* RESET & BASE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0D0D0D;
+      color: #FFFFFF;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 20px;
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    a {
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+    a:hover,
+    a:focus-visible {
+      color: #00D4FF;
+      outline: none;
+      text-decoration: underline;
+    }
+    ::selection {
+      background: rgba(0, 212, 255, 0.22);
+    }
+
+    /* VARIABLES */
+    :root {
+      --accent-primary: #00D4FF;
+      --bg-secondary: #1A1A1A;
+      --radius-card: 16px;
+      --radius-button: 16px;
+      --transition-fast: all 0.2s ease-in-out;
+      --text-muted: #666666;
+      --shadow-default: 0 8px 34px rgba(0, 0, 0, 0.45);
+      --shadow-hover: 0 22px 60px rgba(0, 212, 255, 0.1);
+      --shadow-button: 0 0 20px rgba(0, 212, 255, 0.4);
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 900px;
+      width: 100%;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-card);
+      padding: 40px 48px;
+      box-shadow: var(--shadow-default);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* PAGE TITLE */
+    h1.page-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: var(--accent-primary);
+      user-select: none;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    /* WELCOME */
+    .welcome {
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--text-muted);
+      user-select: none;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    /* PLATFORM OVERVIEW GRID */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      user-select: none;
+    }
+    .overview-card {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-card);
+      padding: 24px 20px;
+      box-shadow: var(--shadow-default);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      cursor: default;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-align: center;
+    }
+    .overview-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+      border: 1px solid var(--accent-primary);
+    }
+    .overview-icon {
+      font-size: 36px;
+      color: var(--accent-primary);
+      user-select: none;
+    }
+    .overview-label {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-muted);
+      user-select: none;
+    }
+    .overview-value {
+      font-weight: 900;
+      font-size: 28px;
+      color: var(--text-primary);
+      user-select: none;
+    }
+    .overview-trend {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--accent-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      user-select: none;
+    }
+    .overview-trend.up i {
+      color: #4ade80; /* green */
+    }
+
+    /* PENDING VERIFICATIONS */
+    .pending-section {
+      user-select: none;
+    }
+    .pending-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--accent-primary);
+      margin-bottom: 16px;
+    }
+    .pending-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .pending-card {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-card);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-default);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      cursor: default;
+      transition: box-shadow 0.25s ease;
+    }
+    .pending-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-4px);
+    }
+    .pending-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      user-select: none;
+      flex: 1;
+    }
+    .pending-name {
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--accent-primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .pending-location {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pending-duration {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-primary);
+      user-select: none;
+    }
+    .review-button {
+      background: var(--accent-primary);
+      color: #000;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 8px 20px;
+      border-radius: var(--radius-button);
+      cursor: pointer;
+      border: none;
+      user-select: none;
+      transition: background-color 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .review-button:hover,
+    .review-button:focus {
+      background-color: #00b8ff;
+      outline: none;
+      text-decoration: none;
+    }
+    .review-button i {
+      font-size: 16px;
+    }
+
+    /* QUICK ACTIONS */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      user-select: none;
+      margin-top: 32px;
+    }
+    .quick-action {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-card);
+      padding: 32px 20px;
+      box-shadow: var(--shadow-default);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+      text-align: center;
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 16px;
+      user-select: none;
+    }
+    .quick-action:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-6px);
+      color: var(--accent-primary);
+    }
+    .quick-action i {
+      font-size: 36px;
+      color: inherit;
+    }
+
+    /* RECENT ACTIVITY */
+    .activity-section {
+      margin-top: 48px;
+      user-select: none;
+    }
+    .activity-header {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--accent-primary);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .activity-list {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .activity-item i {
+      font-size: 18px;
+      color: var(--accent-primary);
+      flex-shrink: 0;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      .overview-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .pending-list {
+        gap: 16px;
+      }
+      .quick-actions {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .activity-list {
+        max-width: 100%;
+      }
+    }
+    @media (max-width: 480px) {
+      .overview-grid {
+        grid-template-columns: 1fr;
+      }
+      .quick-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container" role="main" aria-label="Admin Dashboard">
+
+    <h1 class="page-title">ADMIN DASHBOARD</h1>
+    <p class="welcome">Welcome, Admin</p>
+
+    <!-- Platform Overview -->
+    <section class="overview-grid" aria-label="Platform overview statistics">
+      <article class="overview-card" tabindex="0" aria-label="Total turfs: 48, 42 live">
+        <i class="fa-solid fa-futbol overview-icon" aria-hidden="true"></i>
+        <div class="overview-label">Total Turfs</div>
+        <div class="overview-value">48</div>
+        <div class="overview-trend up">42 live</div>
+      </article>
+      <article class="overview-card" tabindex="0" aria-label="Total users: 2456, 156 new">
+        <i class="fa-solid fa-users overview-icon" aria-hidden="true"></i>
+        <div class="overview-label">Total Users</div>
+        <div class="overview-value">2,456</div>
+        <div class="overview-trend up">+156 new</div>
+      </article>
+      <article class="overview-card" tabindex="0" aria-label="Total bookings: 8234 this week">
+        <i class="fa-regular fa-calendar overview-icon" aria-hidden="true"></i>
+        <div class="overview-label">Total Bookings</div>
+        <div class="overview-value">8,234</div>
+        <div class="overview-trend up">this week</div>
+      </article>
+      <article class="overview-card" tabindex="0" aria-label="Pending approval: 12 requires approval">
+        <i class="fa-solid fa-hourglass-half overview-icon" aria-hidden="true"></i>
+        <div class="overview-label">Pending Approval</div>
+        <div class="overview-value">12</div>
+        <div class="overview-trend">requires approval</div>
+      </article>
+    </section>
+
+    <!-- Pending Verifications -->
+    <section class="pending-section" aria-label="Pending verifications">
+      <div class="pending-header">
+        <span>⚠️ PENDING VERIFICATIONS (12)</span>
+        <a href="pending-verifications.html" class="nav-link" aria-label="View all pending verifications">View All</a>
+      </div>
+      <div class="pending-list">
+        <article class="pending-card" tabindex="0" aria-label="Green Arena Sports, Mumbai, pending 2 hours">
+          <div class="turf-name">🏟️ Green Arena Sports</div>
+          <div class="pending-location"><i class="fa-solid fa-location-dot"></i> Mumbai</div>
+          <div class="pending-duration">⏳ 2 hrs</div>
+          <a href="review-verification.html?id=green-arena" class="review-button" aria-label="Review Green Arena Sports now">
+            Review Now
+          </a>
+        </article>
+        <article class="pending-card" tabindex="0" aria-label="Sports Hub Arena, Delhi, pending 5 hours">
+          <div class="turf-name">🏟️ Sports Hub Arena</div>
+          <div class="pending-location"><i class="fa-solid fa-location-dot"></i> Delhi</div>
+          <div class="pending-duration">⏳ 5 hrs</div>
+          <a href="review-verification.html?id=sports-hub" class="review-button" aria-label="Review Sports Hub Arena now">
+            Review Now
+          </a>
+        </article>
+        <article class="pending-card" tabindex="0" aria-label="Prime Turf Center, Bangalore, pending 8 hours">
+          <div class="turf-name">🏟️ Prime Turf Center</div>
+          <div class="pending-location"><i class="fa-solid fa-location-dot"></i> Bangalore</div>
+          <div class="pending-duration">⏳ 8 hrs</div>
+          <a href="review-verification.html?id=prime-turf" class="review-button" aria-label="Review Prime Turf Center now">
+            Review Now
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="quick-actions" aria-label="Quick actions">
+      <div class="quick-action" tabindex="0" role="button" aria-label="Verify Turfs">
+        <i class="fa-solid fa-check"></i>
+        <span>✓ Verify Turfs</span>
+      </div>
+      <div class="quick-action" tabindex="0" role="button" aria-label="Manage Users">
+        <i class="fa-solid fa-users"></i>
+        <span>👥 Manage Users</span>
+      </div>
+      <div class="quick-action" tabindex="0" role="button" aria-label="Manage Turfs">
+        <i class="fa-solid fa-futbol"></i>
+        <span>🏟️ Manage Turfs</span>
+      </div>
+      <div class="quick-action" tabindex="0" role="button" aria-label="Platform Analytics">
+        <i class="fa-solid fa-chart-simple"></i>
+        <span>📊 Platform Analytics</span>
+      </div>
+      <div class="quick-action" tabindex="0" role="button" aria-label="Reports and Issues">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span>🚨 Reports & Issues</span>
+      </div>
+      <div class="quick-action" tabindex="0" role="button" aria-label="Settings">
+        <i class="fa-solid fa-gear"></i>
+        <span>⚙️ Settings</span>
+      </div>
+    </section>
+
+    <!-- Recent Activity -->
+    <section class="activity-section" aria-label="Recent activity">
+      <h2 class="activity-header">📈 RECENT ACTIVITY</h2>
+      <div class="activity-list" role="list">
+        <div class="activity-item" role="listitem">
+          <i class="fa-solid fa-check"></i> ✓ Turf "Game Zone" approved - 30 min ago
+        </div>
+        <div class="activity-item" role="listitem">
+          <i class="fa-regular fa-user"></i> 👤 New owner registered: Vikram Singh - 1 hr ago
+        </div>
+        <div class="activity-item" role="listitem">
+          <i class="fa-solid fa-xmark"></i> ✗ Turf "XYZ Sports" rejected - 2 hrs ago
+        </div>
+        <div class="activity-item" role="listitem">
+          <i class="fa-regular fa-calendar"></i> 📅 New booking: Green Arena #BMT001 - 3 hrs ago
+        </div>
+        <div class="activity-item" role="listitem">
+          <i class="fa-regular fa-user"></i> 👤 New player registered: Neha Sharma - 4 hrs ago
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BookMyTurf | Turf Owner Registration</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* RESET & BASE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0D0D0D;
+      color: #FFFFFF;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      user-select: none;
+    }
+    a {
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+    a:hover,
+    a:focus-visible {
+      color: #00D4FF;
+      outline: none;
+      text-decoration: underline;
+    }
+    ::selection {
+      background: rgba(0, 212, 255, 0.22);
+    }
+
+    /* VARIABLES */
+    :root {
+      --accent-primary: #00D4FF;
+      --bg-secondary: #1A1A1A;
+      --radius-input: 16px;
+      --radius-button: 16px;
+      --transition-fast: all 0.2s ease-in-out;
+      --text-muted: #666666;
+    }
+
+    /* CONTAINER */
+    .owner-register-container {
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      padding: 48px 40px;
+      max-width: 460px;
+      width: 100%;
+      box-shadow: 0 8px 40px rgba(0, 212, 255, 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* HEADER */
+    .owner-register-header {
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      color: var(--accent-primary);
+      user-select: text;
+    }
+    .owner-register-subtitle {
+      text-align: center;
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--text-muted);
+      user-select: text;
+      margin-bottom: 24px;
+    }
+
+    /* FORM */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 8px;
+      user-select: text;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"] {
+      background: #262626;
+      border: 1.5px solid #404040;
+      border-radius: var(--radius-input);
+      padding: 14px 16px;
+      font-size: 16px;
+      color: #FFFFFF;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s ease;
+      width: 100%;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    input[type="password"]:focus {
+      border-color: var(--accent-primary);
+      outline: none;
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+    }
+
+    /* PASSWORD FIELD WITH TOGGLE */
+    .password-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .password-wrapper input {
+      flex: 1;
+      padding-right: 44px;
+    }
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      cursor: default;
+      color: var(--text-muted);
+      font-size: 18px;
+      user-select: none;
+      background: none;
+      border: none;
+    }
+
+    /* PASSWORD STRENGTH */
+    .password-strength {
+      font-size: 14px;
+      color: #00D4FF;
+      font-weight: 600;
+      user-select: none;
+      margin-top: -16px;
+      margin-bottom: 16px;
+      text-align: right;
+    }
+
+    /* TERMS */
+    .terms {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-muted);
+      user-select: none;
+      cursor: pointer;
+    }
+    .terms input[type="checkbox"] {
+      accent-color: var(--accent-primary);
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+    }
+    .terms label {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* SUBMIT BUTTON */
+    button.owner-register-btn {
+      background-color: var(--accent-primary);
+      color: #000;
+      font-weight: 700;
+      font-size: 18px;
+      padding: 16px 0;
+      border-radius: var(--radius-button);
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+    button.owner-register-btn:hover,
+    button.owner-register-btn:focus {
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+      transform: scale(1.05);
+      outline: none;
+    }
+    button.owner-register-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* OR separator */
+    .or-separator {
+      text-align: center;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-muted);
+      position: relative;
+      user-select: none;
+    }
+    .or-separator::before,
+    .or-separator::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: var(--text-muted);
+      transform: translateY(-50%);
+    }
+    .or-separator::before {
+      left: 0;
+    }
+    .or-separator::after {
+      right: 0;
+    }
+
+    /* SOCIAL LOGIN */
+    .social-login {
+      background-color: #1877F2;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 14px 0;
+      border-radius: var(--radius-button);
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+      border: none;
+      transition: background-color 0.25s ease;
+      width: 100%;
+    }
+    .social-login:hover,
+    .social-login:focus {
+      background-color: #145dbf;
+      outline: none;
+    }
+
+    /* REGISTER LINKS */
+    .register-links {
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-muted);
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .register-links a {
+      color: var(--accent-primary);
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .register-links a:hover,
+    .register-links a:focus {
+      color: #00D4FF;
+      text-decoration: underline;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <main class="owner-register-container" role="main" aria-label="Turf owner registration form">
+    <h1 class="owner-register-header">🏟️ BOOKMYTURF</h1>
+    <p class="owner-register-subtitle">FOR OWNERS<br>Register as Turf Owner and reach thousands of players</p>
+
+    <form action="ownerdashboard.html" method="get" novalidate>
+      <div>
+        <label for="owner-fullname">Full Name *</label>
+        <input id="owner-fullname" type="text" placeholder="Enter your full name" autocomplete="name" required aria-required="true" />
+      </div>
+
+      <div>
+        <label for="owner-email">Email Address *</label>
+        <input id="owner-email" type="email" placeholder="Enter business email" autocomplete="email" required aria-required="true" />
+      </div>
+
+      <div>
+        <label for="owner-phone">Phone Number *</label>
+        <input id="owner-phone" type="tel" placeholder="+91 | Enter phone number" autocomplete="tel" pattern="[0-9]{10,15}" required aria-required="true" />
+      </div>
+
+      <div>
+        <label for="owner-password">Password *</label>
+        <div class="password-wrapper">
+          <input id="owner-password" type="password" placeholder="Create a strong password" autocomplete="new-password" required aria-required="true" />
+          <button type="button" class="toggle-password" aria-label="Password visibility toggle" tabindex="-1" disabled>
+            <i class="fa-regular fa-eye"></i>
+          </button>
+        </div>
+        <div class="password-strength" aria-live="polite" aria-atomic="true">Password strength: Strong</div>
+      </div>
+
+      <div>
+        <label for="owner-confirm-password">Confirm Password *</label>
+        <input id="owner-confirm-password" type="password" placeholder="Confirm your password" autocomplete="new-password" required aria-required="true" />
+      </div>
+
+      <div class="terms">
+        <input type="checkbox" id="agree-owner-terms" name="agree-owner-terms" required aria-required="true" />
+        <label for="agree-owner-terms">I agree to the Terms of Service and Owner Guidelines</label>
+      </div>
+
+      <button type="submit" class="owner-register-btn" aria-label="Create owner account">
+        CREATE OWNER ACCOUNT
+      </button>
+    </form>
+
+    <div class="register-links">
+      <p>Already have an account? <a href="playerlogin.html" tabindex="0">Login</a></p>
+    </div>
+
+    <p style="text-align:center; color: var(--text-muted); margin-top: 24px; user-select:none;">
+      ℹ️ After registration, you can add your turf and submit for verification
+    </p>
+  </main>
+</body>
+</html>

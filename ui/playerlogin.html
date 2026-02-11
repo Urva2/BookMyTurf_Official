@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BookMyTurf | Login</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* RESET & BASE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0D0D0D;
+      color: #FFFFFF;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    a {
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+    a:hover,
+    a:focus-visible {
+      color: #00D4FF;
+      outline: none;
+      text-decoration: underline;
+    }
+    ::selection {
+      background: rgba(0, 212, 255, 0.22);
+    }
+
+    /* VARIABLES */
+    :root {
+      --accent-primary: #00D4FF;
+      --bg-secondary: #1A1A1A;
+      --radius-input: 12px;
+      --radius-button: 14px;
+      --transition-fast: all 0.2s ease-in-out;
+    }
+
+    /* CONTAINER */
+    .login-container {
+      background: var(--bg-secondary);
+      border-radius: 24px;
+      padding: 48px 40px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 8px 40px rgba(0, 212, 255, 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      user-select: none;
+    }
+
+    /* HEADER */
+    .login-header {
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      color: var(--accent-primary);
+      user-select: text;
+    }
+
+    /* FORM */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 8px;
+      user-select: text;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      background: #262626;
+      border: 1.5px solid #404040;
+      border-radius: var(--radius-input);
+      padding: 14px 16px;
+      font-size: 16px;
+      color: #FFFFFF;
+      font-weight: 500;
+      transition: border-color 0.2s ease;
+      width: 100%;
+    }
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: var(--accent-primary);
+      outline: none;
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+    }
+
+    /* PASSWORD FIELD WITH TOGGLE */
+    .password-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .password-wrapper input {
+      flex: 1;
+      padding-right: 44px;
+    }
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 18px;
+      user-select: none;
+      transition: color 0.2s ease;
+    }
+    .toggle-password:hover,
+    .toggle-password:focus {
+      color: var(--accent-primary);
+      outline: none;
+    }
+
+    /* REMEMBER & FORGOT */
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      color: var(--text-muted);
+      user-select: none;
+    }
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .remember-me input {
+      accent-color: var(--accent-primary);
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+    }
+    .forgot-password a {
+      color: var(--accent-primary);
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .forgot-password a:hover,
+    .forgot-password a:focus {
+      color: #00D4FF;
+      text-decoration: underline;
+      outline: none;
+    }
+
+    /* LOGIN BUTTON */
+    button.login-btn {
+      background-color: var(--accent-primary);
+      color: #000;
+      font-weight: 700;
+      font-size: 18px;
+      padding: 14px 0;
+      border-radius: var(--radius-button);
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+    button.login-btn:hover,
+    button.login-btn:focus {
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+      transform: scale(1.05);
+      outline: none;
+    }
+    button.login-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* OR separator */
+    .or-separator {
+      text-align: center;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-muted);
+      position: relative;
+      user-select: none;
+    }
+    .or-separator::before,
+    .or-separator::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: var(--text-muted);
+      transform: translateY(-50%);
+    }
+    .or-separator::before {
+      left: 0;
+    }
+    .or-separator::after {
+      right: 0;
+    }
+
+    /* SOCIAL LOGIN */
+    .social-login {
+      background-color: #1877F2;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 14px 0;
+      border-radius: var(--radius-button);
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+      border: none;
+      transition: background-color 0.25s ease;
+    }
+    .social-login:hover,
+    .social-login:focus {
+      background-color: #145dbf;
+      outline: none;
+    }
+
+    /* REGISTER LINKS */
+    .register-links {
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-muted);
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .register-links a {
+      color: var(--accent-primary);
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .register-links a:hover,
+    .register-links a:focus {
+      color: #00D4FF;
+      text-decoration: underline;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <main class="login-container" role="main" aria-label="Player login form">
+    <h1 class="login-header">🏟️ BOOKMYTURF</h1>
+    <p style="text-align:center; font-weight:700; font-size:20px; user-select:none;">WELCOME BACK, AVENGER!</p>
+
+    <form action="browse.html" method="get" novalidate>
+
+  <div>
+    <label for="email">Email</label>
+    <input id="email" type="email" required />
+  </div>
+
+  <div>
+    <label for="password">Password</label>
+    <input id="password" type="password" required />
+  </div>
+
+  <button type="submit" class="login-btn" aria-label="Login to your account">
+    LOGIN
+  </button>
+
+</form>
+
+
+    <div class="or-separator" aria-hidden="true">OR</div>
+
+    <button class="social-login" type="button" aria-label="Continue with Google">
+      <i class="fa-brands fa-google"></i> Continue with Google
+    </button>
+
+    <div class="register-links">
+      <p>Don't have an account? <a href="playerregistration.html" tabindex="0">Register</a></p>
+      <p>Are you a Turf Owner? <a href="ownerregistration.html" tabindex="0">Register Here →</a></p>
+    </div>
+  </main>
+
+
+</body>
+</html>
