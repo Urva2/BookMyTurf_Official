@@ -1,12 +1,9 @@
-# accounts/apps.py
 from django.apps import AppConfig
 
-class AccountsConfig(AppConfig):
+
+class BmtConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'accounts'
+    name = 'bmt'
 
     def ready(self):
-        import accounts.signals
-
-
-
+        import bmt.signals

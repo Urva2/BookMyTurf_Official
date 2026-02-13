@@ -1,9 +1,10 @@
+{% load static %} 
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BookMyTurf | Turf Owner Registration</title>
+  <title>BookMyTurf | Player Registration</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -33,7 +34,6 @@
       justify-content: center;
       align-items: center;
       padding: 20px;
-      user-select: none;
     }
     a {
       color: var(--accent-primary);
@@ -55,16 +55,16 @@
     :root {
       --accent-primary: #00D4FF;
       --bg-secondary: #1A1A1A;
-      --radius-input: 16px;
-      --radius-button: 16px;
+      --radius-input: 12px;
+      --radius-button: 14px;
       --transition-fast: all 0.2s ease-in-out;
       --text-muted: #666666;
     }
 
     /* CONTAINER */
-    .owner-register-container {
+    .register-container {
       background: var(--bg-secondary);
-      border-radius: 16px;
+      border-radius: 24px;
       padding: 48px 40px;
       max-width: 460px;
       width: 100%;
@@ -72,10 +72,11 @@
       display: flex;
       flex-direction: column;
       gap: 32px;
+      user-select: none;
     }
 
     /* HEADER */
-    .owner-register-header {
+    .register-header {
       text-align: center;
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
@@ -83,13 +84,12 @@
       color: var(--accent-primary);
       user-select: text;
     }
-    .owner-register-subtitle {
+    .register-subtitle {
       text-align: center;
       font-weight: 600;
       font-size: 16px;
       color: var(--text-muted);
       user-select: text;
-      margin-bottom: 24px;
     }
 
     /* FORM */
@@ -143,23 +143,37 @@
     .toggle-password {
       position: absolute;
       right: 12px;
-      cursor: default;
+      cursor: pointer;
       color: var(--text-muted);
       font-size: 18px;
       user-select: none;
+      transition: color 0.2s ease;
       background: none;
       border: none;
+    }
+    .toggle-password:hover,
+    .toggle-password:focus {
+      color: var(--accent-primary);
+      outline: none;
     }
 
     /* PASSWORD STRENGTH */
     .password-strength {
       font-size: 14px;
-      color: #00D4FF;
-      font-weight: 600;
+      color: var(--text-muted);
       user-select: none;
       margin-top: -16px;
       margin-bottom: 16px;
-      text-align: right;
+      font-weight: 600;
+    }
+    .password-strength.weak {
+      color: #FF4757;
+    }
+    .password-strength.medium {
+      color: #FFB800;
+    }
+    .password-strength.strong {
+      color: #00D4FF;
     }
 
     /* TERMS */
@@ -184,7 +198,7 @@
     }
 
     /* SUBMIT BUTTON */
-    button.owner-register-btn {
+    button.register-btn {
       background-color: var(--accent-primary);
       color: #000;
       font-weight: 700;
@@ -201,13 +215,13 @@
       gap: 12px;
       width: 100%;
     }
-    button.owner-register-btn:hover,
-    button.owner-register-btn:focus {
+    button.register-btn:hover,
+    button.register-btn:focus {
       box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
       transform: scale(1.05);
       outline: none;
     }
-    button.owner-register-btn:active {
+    button.register-btn:active {
       transform: scale(0.98);
     }
 
@@ -286,59 +300,66 @@
   </style>
 </head>
 <body>
-  <main class="owner-register-container" role="main" aria-label="Turf owner registration form">
-    <h1 class="owner-register-header">🏟️ BOOKMYTURF</h1>
-    <p class="owner-register-subtitle">FOR OWNERS<br>Register as Turf Owner and reach thousands of players</p>
+  <main class="register-container" role="main" aria-label="Player registration form">
+    <h1 class="register-header">🏟️ BOOKMYTURF</h1>
+    <p class="register-subtitle">CREATE YOUR ACCOUNT<br>Join thousands of sports enthusiasts</p>
 
-    <form action="ownerdashboard.html" method="get" novalidate>
+    <form method="post" novalidate>
+      {%csrf_token %}
+      <!-- {{ form.as_p }} -->
       <div>
-        <label for="owner-fullname">Full Name *</label>
-        <input id="owner-fullname" type="text" placeholder="Enter your full name" autocomplete="name" required aria-required="true" />
+        <label for="fullname"> Name *</label>
+        <input id="fullname" name="username" type="text" placeholder="👤 Enter username (no spaces)" autocomplete="name" required aria-required="true" />
       </div>
 
       <div>
-        <label for="owner-email">Email Address *</label>
-        <input id="owner-email" type="email" placeholder="Enter business email" autocomplete="email" required aria-required="true" />
+        <label for="email">Email Address *</label>
+        <input id="email" name="email" type="email" placeholder="📧 Enter your email" autocomplete="email" required aria-required="true" />
       </div>
 
       <div>
-        <label for="owner-phone">Phone Number *</label>
-        <input id="owner-phone" type="tel" placeholder="+91 | Enter phone number" autocomplete="tel" pattern="[0-9]{10,15}" required aria-required="true" />
+        <label for="phone">Phone Number *</label>
+        <input id="phone"name="phone" type="tel" placeholder="📱 +91 | Enter your phone number" autocomplete="tel" pattern="[0-9]{10,15}" required aria-required="true" />
       </div>
 
       <div>
-        <label for="owner-password">Password *</label>
+        <label for="password">Password *</label>
         <div class="password-wrapper">
-          <input id="owner-password" type="password" placeholder="Create a strong password" autocomplete="new-password" required aria-required="true" />
-          <button type="button" class="toggle-password" aria-label="Password visibility toggle" tabindex="-1" disabled>
+          <input id="password"name="password1" type="password" placeholder="🔒 Create a strong password" autocomplete="new-password" required aria-required="true" />
+          <button type="button" class="toggle-password" aria-label="Toggle password visibility" tabindex="0">
             <i class="fa-regular fa-eye"></i>
           </button>
         </div>
-        <div class="password-strength" aria-live="polite" aria-atomic="true">Password strength: Strong</div>
+        <div class="password-strength weak" aria-live="polite" aria-atomic="true">Password strength: Weak</div>
       </div>
 
       <div>
-        <label for="owner-confirm-password">Confirm Password *</label>
-        <input id="owner-confirm-password" type="password" placeholder="Confirm your password" autocomplete="new-password" required aria-required="true" />
+        <label for="confirm-password">Confirm Password *</label>
+        <input id="confirm-password" name="password2" type="password" placeholder="🔒 Confirm your password" autocomplete="new-password" required aria-required="true" />
       </div>
 
       <div class="terms">
-        <input type="checkbox" id="agree-owner-terms" name="agree-owner-terms" required aria-required="true" />
-        <label for="agree-owner-terms">I agree to the Terms of Service and Owner Guidelines</label>
+        <input type="checkbox" id="agree-terms"  required aria-required="true" />
+        <label for="agree-terms">I agree to the Terms of Service and Privacy Policy</label>
       </div>
 
-      <button type="submit" class="owner-register-btn" aria-label="Create owner account">
-        CREATE OWNER ACCOUNT
+      <button type="submit" name="submit" class="register-btn" aria-label="Create player account">
+        CREATE PLAYER ACCOUNT
       </button>
     </form>
 
-    <div class="register-links">
-      <p>Already have an account? <a href="playerlogin.html" tabindex="0">Login</a></p>
-    </div>
+    <div class="or-separator" aria-hidden="true">OR</div>
 
-    <p style="text-align:center; color: var(--text-muted); margin-top: 24px; user-select:none;">
-      ℹ️ After registration, you can add your turf and submit for verification
-    </p>
+    <button class="social-login" type="button" aria-label="Continue with Google">
+      <i class="fa-brands fa-google"></i> Continue with Google
+    </button>
+
+    <div class="register-links">
+      <p>Already have an account? <a href="{% url 'login' %}" tabindex="0">Login</a></p>
+      <p>Are you a Turf Owner? <a href="{% url 'register_owner' %}" tabindex="0">Register Here →</a></p>
+    </div>
   </main>
+
+  
 </body>
 </html>

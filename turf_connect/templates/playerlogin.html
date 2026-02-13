@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -279,35 +280,41 @@
   <main class="login-container" role="main" aria-label="Player login form">
     <h1 class="login-header">🏟️ BOOKMYTURF</h1>
     <p style="text-align:center; font-weight:700; font-size:20px; user-select:none;">WELCOME BACK, AVENGER!</p>
-
-    <form action="browse.html" method="get" novalidate>
-
+{% if messages %}
+  {% for message in messages %}
+    <div style="
+        background:#ff4d4d;
+        color:white;
+        padding:10px;
+        border-radius:8px;
+        text-align:center;
+        font-weight:600;
+        margin-bottom:15px;">
+        {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+    <form method="post" novalidate>
+       {% csrf_token %}
   <div>
     <label for="email">Email</label>
-    <input id="email" type="email" required />
+    <input id="email" name="email" type="email" placeholder="Enter Email" required />
   </div>
 
   <div>
     <label for="password">Password</label>
-    <input id="password" type="password" required />
+    <input id="password" name="password"  type="password" placeholder="Enter Password" required />
   </div>
 
   <button type="submit" class="login-btn" aria-label="Login to your account">
     LOGIN
   </button>
-
 </form>
 
 
-    <div class="or-separator" aria-hidden="true">OR</div>
-
-    <button class="social-login" type="button" aria-label="Continue with Google">
-      <i class="fa-brands fa-google"></i> Continue with Google
-    </button>
-
     <div class="register-links">
-      <p>Don't have an account? <a href="playerregistration.html" tabindex="0">Register</a></p>
-      <p>Are you a Turf Owner? <a href="ownerregistration.html" tabindex="0">Register Here →</a></p>
+      <p>Don't have an account? <a href="{% url 'register_player' %}" tabindex="0">Register</a></p>
+      <p>Are you a Turf Owner? <a href="{% url 'register_owner' %}" tabindex="0">Register Here →</a></p>
     </div>
   </main>
 
