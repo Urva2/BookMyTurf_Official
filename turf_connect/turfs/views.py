@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseForbidden
@@ -51,7 +51,7 @@ def edit_turf(request, turf_id):
     if request.user.role != 'owner':
         return HttpResponseForbidden("Access denied.")
 
-    from django.shortcuts import get_object_or_404
+
     turf = get_object_or_404(Turf, id=turf_id, owner=request.user)
 
     if turf.status != 'rejected':
@@ -99,7 +99,40 @@ def edit_turf(request, turf_id):
     })
 
 
+
 def browse_turfs(request):
-    """Display all approved turfs for browsing."""
-    turfs = Turf.objects.filter(status='approved').order_by('-created_at')
-    return render(request, 'browse.html', {'turfs': turfs})
+    turfs = Turf.objects.filter(status="approved")
+
+    data = []
+    for turf in turfs:
+        data.append({
+            "id": turf.id,
+            "name": turf.name,
+            "city": turf.city,
+            "state": turf.state,
+            "description": turf.description[:120],
+            "locationKey": turf.city.lower(),
+            "price": 1000,
+            "rating": 5.0,
+            "facilities": turf.facilities,
+            "verified": True
+        })
+
+    return render(request, "browse.html", {
+        "turf_json": data
+    })
+
+
+def turf_detail(request, turf_id):
+    """Display detailed information for a specific turf."""
+
+    turf = get_object_or_404(Turf, id=turf_id, status='approved')
+    return render(request, 'turfdetail.html', {'turf': turf})
+
+def slot_management(request, id):
+    """Display the slot management page for a specific turf."""
+    if request.user.role != 'owner':
+        return HttpResponseForbidden("Access denied.")
+    
+    turf = get_object_or_404(Turf, id=id, owner=request.user)
+    return render(request, 'slotmanagement.html', {'turf': turf})

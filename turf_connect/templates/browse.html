@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,92 +9,136 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap"
+    rel="stylesheet">
 
   <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
     /* =======================
        RESET + BASE
     ======================= */
-    *{margin:0;padding:0;box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       background: var(--bg-primary);
       color: var(--text-primary);
-      line-height:1.6;
-      overflow-x:hidden;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-    h1,h2,h3{font-family:'Poppins',sans-serif; letter-spacing:-0.02em}
-    a{color:inherit}
-    :focus-visible{outline:2px solid var(--accent-primary); outline-offset:3px}
-    ::selection{background: rgba(0,212,255,.22)}
-    .sr-only{
-      position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0
+
+    h1,
+    h2,
+    h3 {
+      font-family: 'Poppins', sans-serif;
+      letter-spacing: -0.02em
+    }
+
+    a {
+      color: inherit
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 3px
+    }
+
+    ::selection {
+      background: rgba(0, 212, 255, .22)
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0
     }
 
     /* =======================
        TOKENS
     ======================= */
-    :root{
-      --bg-primary:#0D0D0D;
-      --bg-secondary:#1A1A1A;
-      --bg-tertiary:#262626;
+    :root {
+      --bg-primary: #0D0D0D;
+      --bg-secondary: #1A1A1A;
+      --bg-tertiary: #262626;
 
-      --accent-primary:#00D4FF;
-      --accent-secondary:#0099CC;
-      --accent-glow:rgba(0,212,255,.30);
+      --accent-primary: #00D4FF;
+      --accent-secondary: #0099CC;
+      --accent-glow: rgba(0, 212, 255, .30);
 
-      --text-primary:#FFFFFF;
-      --text-secondary:#B3B3B3;
-      --text-muted:#666666;
+      --text-primary: #FFFFFF;
+      --text-secondary: #B3B3B3;
+      --text-muted: #666666;
 
-      --shadow-default: 0 10px 42px rgba(0,0,0,.52);
-      --shadow-hover: 0 22px 70px rgba(0,212,255,.12);
+      --shadow-default: 0 10px 42px rgba(0, 0, 0, .52);
+      --shadow-hover: 0 22px 70px rgba(0, 212, 255, .12);
 
-      --radius-card:16px;
-      --radius-button:12px;
-      --radius-input:12px;
+      --radius-card: 16px;
+      --radius-button: 12px;
+      --radius-input: 12px;
 
-      --transition-fast: 170ms cubic-bezier(.2,.8,.2,1);
-      --transition-medium: 260ms cubic-bezier(.2,.8,.2,1);
+      --transition-fast: 170ms cubic-bezier(.2, .8, .2, 1);
+      --transition-medium: 260ms cubic-bezier(.2, .8, .2, 1);
 
       --container: 1200px;
     }
 
-    .container{
-      width:100%;
+    .container {
+      width: 100%;
       max-width: var(--container);
-      margin:0 auto;
+      margin: 0 auto;
       padding: 0 20px;
     }
 
     /* =======================
        BACKDROP / GRID PATTERN
     ======================= */
-    .backdrop{
-      position:fixed; inset:0; z-index:-3;
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
       background:
-        radial-gradient(1200px 700px at 18% 20%, rgba(0,212,255,.10), transparent 60%),
-        radial-gradient(900px 600px at 82% 75%, rgba(0,212,255,.08), transparent 60%),
+        radial-gradient(1200px 700px at 18% 20%, rgba(0, 212, 255, .10), transparent 60%),
+        radial-gradient(900px 600px at 82% 75%, rgba(0, 212, 255, .08), transparent 60%),
         linear-gradient(180deg, #0B0B0B 0%, #0D0D0D 45%, #0B0B0B 100%);
     }
-    .grid{
-      position:fixed; inset:-2px; z-index:-2;
-      opacity:.58;
-      pointer-events:none;
+
+    .grid {
+      position: fixed;
+      inset: -2px;
+      z-index: -2;
+      opacity: .58;
+      pointer-events: none;
       background:
-        repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 1px, transparent 1px 120px),
-        repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 120px);
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .06) 0 1px, transparent 1px 120px),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, .05) 0 1px, transparent 1px 120px);
       mask-image: radial-gradient(64% 64% at 50% 18%, #000 0 62%, transparent 100%);
       -webkit-mask-image: radial-gradient(64% 64% at 50% 18%, #000 0 62%, transparent 100%);
       filter: blur(.15px);
     }
-    .noise{
-      position:fixed; inset:0; z-index:-1;
-      opacity:.10; pointer-events:none;
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      opacity: .10;
+      pointer-events: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
       background-size: 240px 240px;
       mix-blend-mode: overlay;
@@ -102,70 +147,112 @@
     /* =======================
        NAV (with Profile dropdown)
     ======================= */
-    header.nav{
-      position: sticky; top:0; z-index:60;
-      background: rgba(13,13,13,.78);
+    header.nav {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      background: rgba(13, 13, 13, .78);
       backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
     }
-    .nav-inner{
-      display:flex; align-items:center; justify-content:space-between;
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: 14px 0;
       gap: 14px;
     }
-    .brand{
-      display:flex; align-items:center; gap: 10px;
-      text-decoration:none;
-      font-weight:700;
-      font-family:'Poppins',sans-serif;
-      letter-spacing:-0.02em;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      letter-spacing: -0.02em;
       font-size: 20px;
-      white-space:nowrap;
+      white-space: nowrap;
     }
-    .brand-badge{
-      width: 38px; height: 38px;
+
+    .brand-badge {
+      width: 38px;
+      height: 38px;
       border-radius: 12px;
-      display:grid; place-items:center;
+      display: grid;
+      place-items: center;
       background:
-        radial-gradient(18px 18px at 30% 30%, rgba(255,255,255,.35), transparent 60%),
-        linear-gradient(135deg, rgba(0,212,255,.95), rgba(0,153,204,.65));
+        radial-gradient(18px 18px at 30% 30%, rgba(255, 255, 255, .35), transparent 60%),
+        linear-gradient(135deg, rgba(0, 212, 255, .95), rgba(0, 153, 204, .65));
       box-shadow:
-        0 10px 30px rgba(0,212,255,.12),
-        inset 0 1px 0 rgba(255,255,255,.35);
-      color:#001018;
+        0 10px 30px rgba(0, 212, 255, .12),
+        inset 0 1px 0 rgba(255, 255, 255, .35);
+      color: #001018;
     }
-    .brand-badge i{font-size: 16px}
 
-    .nav-toggle{display:none}
-    .hamburger{
-      display:none;
-      width:46px;height:44px;
+    .brand-badge i {
+      font-size: 16px
+    }
+
+    .nav-toggle {
+      display: none
+    }
+
+    .hamburger {
+      display: none;
+      width: 46px;
+      height: 44px;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      align-items:center; justify-content:center;
-      cursor:pointer;
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(255, 255, 255, .04);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
       transition: var(--transition-fast);
     }
-    .hamburger:hover{border-color: rgba(0,212,255,.25); background: rgba(0,212,255,.08)}
-    .hamburger span{
-      width:18px;height:2px;background: rgba(255,255,255,.85);
-      position:relative; display:block;
-    }
-    .hamburger span::before,.hamburger span::after{
-      content:""; position:absolute; left:0;
-      width:18px;height:2px;background: rgba(255,255,255,.85);
-      transition: var(--transition-fast);
-    }
-    .hamburger span::before{top:-6px}
-    .hamburger span::after{top:6px}
 
-    nav .links{
-      display:flex; gap: 10px; list-style:none;
-      align-items:center;
+    .hamburger:hover {
+      border-color: rgba(0, 212, 255, .25);
+      background: rgba(0, 212, 255, .08)
     }
-    nav .links a{
-      text-decoration:none;
+
+    .hamburger span {
+      width: 18px;
+      height: 2px;
+      background: rgba(255, 255, 255, .85);
+      position: relative;
+      display: block;
+    }
+
+    .hamburger span::before,
+    .hamburger span::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 18px;
+      height: 2px;
+      background: rgba(255, 255, 255, .85);
+      transition: var(--transition-fast);
+    }
+
+    .hamburger span::before {
+      top: -6px
+    }
+
+    .hamburger span::after {
+      top: 6px
+    }
+
+    nav .links {
+      display: flex;
+      gap: 10px;
+      list-style: none;
+      align-items: center;
+    }
+
+    nav .links a {
+      text-decoration: none;
       color: var(--text-secondary);
       font-weight: 700;
       font-size: 14px;
@@ -173,505 +260,724 @@
       border-radius: 12px;
       transition: var(--transition-fast);
     }
-    nav .links a:hover{color: var(--text-primary); background: rgba(255,255,255,.06)}
-    nav .links a[aria-current="page"]{
+
+    nav .links a:hover {
       color: var(--text-primary);
-      background: rgba(0,212,255,.10);
-      border: 1px solid rgba(0,212,255,.22);
+      background: rgba(255, 255, 255, .06)
     }
 
-    .nav-right{display:flex; align-items:center; gap: 12px; white-space:nowrap}
+    nav .links a[aria-current="page"] {
+      color: var(--text-primary);
+      background: rgba(0, 212, 255, .10);
+      border: 1px solid rgba(0, 212, 255, .22);
+    }
 
-    .btn{
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap
+    }
+
+    .btn {
       height: 46px;
       padding: 0 16px;
       border-radius: var(--radius-button);
       font-weight: 800;
       font-size: 14px;
       border: 0;
-      cursor:pointer;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       gap: 10px;
       transition: transform var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
-      user-select:none;
+      user-select: none;
       -webkit-tap-highlight-color: transparent;
     }
-    .btn-ghost{
+
+    .btn-ghost {
       color: var(--text-secondary);
       background: transparent;
-      border: 1px solid rgba(255,255,255,.12);
+      border: 1px solid rgba(255, 255, 255, .12);
     }
-    .btn-ghost:hover{color:var(--text-primary); border-color: rgba(255,255,255,.22); background: rgba(255,255,255,.04)}
-    .btn-primary{
-      color:#001018;
-      background: linear-gradient(180deg, rgba(0,212,255,1), rgba(0,153,204,1));
+
+    .btn-ghost:hover {
+      color: var(--text-primary);
+      border-color: rgba(255, 255, 255, .22);
+      background: rgba(255, 255, 255, .04)
+    }
+
+    .btn-primary {
+      color: #001018;
+      background: linear-gradient(180deg, rgba(0, 212, 255, 1), rgba(0, 153, 204, 1));
       box-shadow:
-        0 18px 40px rgba(0,212,255,.10),
-        inset 0 1px 0 rgba(255,255,255,.45);
+        0 18px 40px rgba(0, 212, 255, .10),
+        inset 0 1px 0 rgba(255, 255, 255, .45);
     }
-    .btn-primary:hover{transform: translateY(-1px) scale(1.02); box-shadow: 0 0 0 6px rgba(0,212,255,.10), 0 22px 60px rgba(0,212,255,.14)}
-    .btn-primary:active{transform: translateY(0) scale(.99)}
+
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 0 0 6px rgba(0, 212, 255, .10), 0 22px 60px rgba(0, 212, 255, .14)
+    }
+
+    .btn-primary:active {
+      transform: translateY(0) scale(.99)
+    }
 
     /* Profile dropdown */
-    .profile{
-      position:relative;
+    .profile {
+      position: relative;
     }
-    .profile > button{
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.12);
+
+    .profile>button {
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .12);
       color: var(--text-primary);
       padding: 0 14px;
     }
-    .profile > button:hover{
-      border-color: rgba(0,212,255,.28);
-      background: rgba(0,212,255,.08);
+
+    .profile>button:hover {
+      border-color: rgba(0, 212, 255, .28);
+      background: rgba(0, 212, 255, .08);
       transform: translateY(-1px);
     }
-    .profile-menu{
-      position:absolute;
-      right:0; top: calc(100% + 10px);
+
+    .profile-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 10px);
       min-width: 220px;
       border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(13,13,13,.88);
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(13, 13, 13, .88);
       backdrop-filter: blur(16px);
       box-shadow: var(--shadow-default);
       padding: 10px;
-      display:none;
+      display: none;
     }
-    .profile.open .profile-menu{display:block}
-    .profile-menu a{
-      display:flex; align-items:center; gap: 10px;
+
+    .profile.open .profile-menu {
+      display: block
+    }
+
+    .profile-menu a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       padding: 10px 10px;
       border-radius: 12px;
-      text-decoration:none;
+      text-decoration: none;
       color: var(--text-secondary);
       font-weight: 700;
       font-size: 14px;
       transition: var(--transition-fast);
     }
-    .profile-menu a:hover{background: rgba(255,255,255,.06); color: var(--text-primary)}
-    .profile-menu hr{
-      border:0; height:1px; margin: 8px 4px;
-      background: rgba(255,255,255,.10);
+
+    .profile-menu a:hover {
+      background: rgba(255, 255, 255, .06);
+      color: var(--text-primary)
+    }
+
+    .profile-menu hr {
+      border: 0;
+      height: 1px;
+      margin: 8px 4px;
+      background: rgba(255, 255, 255, .10);
     }
 
     /* Mobile nav */
-    @media (max-width: 860px){
-      .hamburger{display:flex}
-      nav .links{
-        display:none;
-        width:100%;
-        padding: 12px 0 4px;
-        border-top: 1px solid rgba(255,255,255,.08);
-        gap: 8px;
-        flex-direction:column;
-        align-items:flex-start;
+    @media (max-width: 860px) {
+      .hamburger {
+        display: flex
       }
-      .nav-toggle:checked ~ nav .links{display:flex}
-      .nav-toggle:checked + label span{background: transparent}
-      .nav-toggle:checked + label span::before{top:0; transform: rotate(45deg)}
-      .nav-toggle:checked + label span::after{top:0; transform: rotate(-45deg)}
-      .nav-inner{flex-wrap:wrap}
-      .nav-right{margin-left:auto}
+
+      nav .links {
+        display: none;
+        width: 100%;
+        padding: 12px 0 4px;
+        border-top: 1px solid rgba(255, 255, 255, .08);
+        gap: 8px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-toggle:checked~nav .links {
+        display: flex
+      }
+
+      .nav-toggle:checked+label span {
+        background: transparent
+      }
+
+      .nav-toggle:checked+label span::before {
+        top: 0;
+        transform: rotate(45deg)
+      }
+
+      .nav-toggle:checked+label span::after {
+        top: 0;
+        transform: rotate(-45deg)
+      }
+
+      .nav-inner {
+        flex-wrap: wrap
+      }
+
+      .nav-right {
+        margin-left: auto
+      }
     }
 
     /* =======================
        PAGE HEADER
     ======================= */
-    .page-head{
+    .page-head {
       padding: clamp(22px, 3.4vw, 34px) 0 clamp(18px, 3vw, 26px);
     }
-    .head-row{
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap: 16px; flex-wrap:wrap;
+
+    .head-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
     }
-    .page-head h1{
+
+    .page-head h1 {
       font-size: clamp(26px, 3.4vw, 38px);
-      line-height:1.1;
+      line-height: 1.1;
       margin-bottom: 6px;
     }
-    .page-head p{color: var(--text-secondary); max-width: 60ch}
-    .found{
+
+    .page-head p {
+      color: var(--text-secondary);
+      max-width: 60ch
+    }
+
+    .found {
       color: var(--text-secondary);
       font-weight: 800;
-      letter-spacing:.02em;
+      letter-spacing: .02em;
       font-size: 13px;
       padding: 10px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .03);
     }
-    .found b{color: var(--text-primary)}
-    .divider{
-      height:1px;
-      background: rgba(255,255,255,.08);
+
+    .found b {
+      color: var(--text-primary)
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(255, 255, 255, .08);
       margin-top: 18px;
     }
 
     /* =======================
        LAYOUT: FILTERS + GRID
     ======================= */
-    .browse{
+    .browse {
       padding: 0 0 clamp(40px, 6vw, 70px);
     }
-    .browse-grid{
-      display:grid;
+
+    .browse-grid {
+      display: grid;
       grid-template-columns: 320px 1fr;
       gap: 18px;
-      align-items:start;
+      align-items: start;
     }
 
     /* Filter sidebar */
-    .filters{
+    .filters {
       position: sticky;
       top: 84px;
       border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .02));
       box-shadow: var(--shadow-default);
-      overflow:hidden;
+      overflow: hidden;
     }
-    .filters-head{
+
+    .filters-head {
       padding: 16px 16px 12px;
-      display:flex; align-items:center; justify-content:space-between; gap: 10px;
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
     }
-    .filters-head h2{
+
+    .filters-head h2 {
       font-size: 14px;
-      letter-spacing:.12em;
+      letter-spacing: .12em;
       text-transform: uppercase;
       color: var(--text-secondary);
     }
-    .filters-body{padding: 14px 16px 16px}
-    .group{padding: 14px 0}
-    .group + .group{border-top: 1px solid rgba(255,255,255,.08)}
-    .group-title{
-      display:flex; align-items:center; gap: 10px;
+
+    .filters-body {
+      padding: 14px 16px 16px
+    }
+
+    .group {
+      padding: 14px 0
+    }
+
+    .group+.group {
+      border-top: 1px solid rgba(255, 255, 255, .08)
+    }
+
+    .group-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       font-weight: 900;
       font-size: 13px;
-      letter-spacing:.06em;
+      letter-spacing: .06em;
       text-transform: uppercase;
       color: var(--text-secondary);
       margin-bottom: 12px;
     }
-    .group-title i{color: var(--accent-primary)}
-    .select{
-      width:100%;
+
+    .group-title i {
+      color: var(--accent-primary)
+    }
+
+    .select {
+      width: 100%;
       height: 46px;
       border-radius: 14px;
       padding: 0 12px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.25);
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(0, 0, 0, .25);
       color: var(--text-primary);
       font-weight: 700;
-      outline:0;
+      outline: 0;
       transition: var(--transition-fast);
-      appearance:none;
+      appearance: none;
       background-image:
-        linear-gradient(45deg, transparent 50%, rgba(255,255,255,.75) 50%),
-        linear-gradient(135deg, rgba(255,255,255,.75) 50%, transparent 50%);
+        linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, .75) 50%),
+        linear-gradient(135deg, rgba(255, 255, 255, .75) 50%, transparent 50%);
       background-position:
         calc(100% - 20px) 50%,
         calc(100% - 14px) 50%;
       background-size: 6px 6px, 6px 6px;
       background-repeat: no-repeat;
     }
-    .select:focus{
-      border-color: rgba(0,212,255,.35);
-      box-shadow: 0 0 0 6px rgba(0,212,255,.10);
+
+    .select:focus {
+      border-color: rgba(0, 212, 255, .35);
+      box-shadow: 0 0 0 6px rgba(0, 212, 255, .10);
     }
 
-    .range-wrap{
-      display:grid;
+    .range-wrap {
+      display: grid;
       gap: 10px;
     }
-    input[type="range"]{
-      width:100%;
+
+    input[type="range"] {
+      width: 100%;
       accent-color: var(--accent-primary);
     }
-    .range-meta{
-      display:flex; justify-content:space-between; gap: 12px;
+
+    .range-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
       font-size: 13px;
       color: var(--text-secondary);
       font-weight: 700;
     }
-    .range-meta b{color: var(--text-primary)}
-    .filter-actions{
-      display:flex; gap: 10px; flex-wrap:wrap;
+
+    .range-meta b {
+      color: var(--text-primary)
+    }
+
+    .filter-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
       margin-top: 14px;
     }
-    .btn-secondary{
+
+    .btn-secondary {
       color: var(--text-primary);
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .14);
     }
-    .btn-secondary:hover{
+
+    .btn-secondary:hover {
       transform: translateY(-1px);
-      border-color: rgba(0,212,255,.28);
-      background: rgba(0,212,255,.08);
+      border-color: rgba(0, 212, 255, .28);
+      background: rgba(0, 212, 255, .08);
     }
 
     /* Mobile: collapsible filters */
-    .filters-toggle{
-      display:none;
-      width:100%;
-      justify-content:space-between;
-      align-items:center;
+    .filters-toggle {
+      display: none;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
       padding: 12px 14px;
       border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(255, 255, 255, .03);
       color: var(--text-primary);
       font-weight: 900;
-      cursor:pointer;
+      cursor: pointer;
       gap: 10px;
     }
-    .filters-toggle i{color: var(--accent-primary)}
-    @media (max-width: 980px){
-      .browse-grid{grid-template-columns: 1fr}
-      .filters{position:relative; top:auto}
-      .filters-toggle{display:flex}
-      .filters[data-collapsed="true"] .filters-body{display:none}
-      .filters[data-collapsed="true"] .filters-head{border-bottom:0}
-      .filters{box-shadow: none}
+
+    .filters-toggle i {
+      color: var(--accent-primary)
+    }
+
+    @media (max-width: 980px) {
+      .browse-grid {
+        grid-template-columns: 1fr
+      }
+
+      .filters {
+        position: relative;
+        top: auto
+      }
+
+      .filters-toggle {
+        display: flex
+      }
+
+      .filters[data-collapsed="true"] .filters-body {
+        display: none
+      }
+
+      .filters[data-collapsed="true"] .filters-head {
+        border-bottom: 0
+      }
+
+      .filters {
+        box-shadow: none
+      }
     }
 
     /* =======================
        TURF GRID + CARDS
     ======================= */
-    .results-head{
-      display:flex; justify-content:space-between; align-items:center; gap: 12px; flex-wrap:wrap;
+    .results-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
       margin-bottom: 12px;
     }
-    .results-head h2{
+
+    .results-head h2 {
       font-size: 16px;
-      letter-spacing:.10em;
+      letter-spacing: .10em;
       text-transform: uppercase;
       color: var(--text-secondary);
     }
-    .sort{
-      display:flex; align-items:center; gap: 10px;
+
+    .sort {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       color: var(--text-secondary);
       font-weight: 800;
       font-size: 13px;
     }
-    .sort select{width:auto; min-width: 180px}
-    .cards{
-      display:grid;
+
+    .sort select {
+      width: auto;
+      min-width: 180px
+    }
+
+    .cards {
+      display: grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 16px;
     }
 
-    .turf{
+    .turf {
       grid-column: span 6;
       border-radius: var(--radius-card);
-      overflow:hidden;
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      border: 1px solid rgba(255,255,255,.10);
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .02));
+      border: 1px solid rgba(255, 255, 255, .10);
       box-shadow: var(--shadow-default);
       transition: transform var(--transition-medium), border-color var(--transition-medium), box-shadow var(--transition-medium);
-      position:relative;
+      position: relative;
       min-height: 340px;
-      display:flex;
-      flex-direction:column;
+      display: flex;
+      flex-direction: column;
     }
-    .turf:hover{
+
+    .turf:hover {
       transform: translateY(-5px);
-      border-color: rgba(0,212,255,.32);
+      border-color: rgba(0, 212, 255, .32);
       box-shadow: var(--shadow-hover);
     }
-    .turf:focus-within{
-      border-color: rgba(0,212,255,.40);
-      box-shadow: 0 0 0 6px rgba(0,212,255,.10), var(--shadow-hover);
+
+    .turf:focus-within {
+      border-color: rgba(0, 212, 255, .40);
+      box-shadow: 0 0 0 6px rgba(0, 212, 255, .10), var(--shadow-hover);
     }
-    .turf-visual{
+
+    .turf-visual {
       height: 170px;
       background:
-        radial-gradient(120px 90px at 25% 25%, rgba(255,255,255,.14), transparent 60%),
-        radial-gradient(200px 140px at 70% 70%, rgba(0,212,255,.14), transparent 60%),
-        linear-gradient(135deg, rgba(38,38,38,.92), rgba(13,13,13,.92));
-      position:relative;
+        radial-gradient(120px 90px at 25% 25%, rgba(255, 255, 255, .14), transparent 60%),
+        radial-gradient(200px 140px at 70% 70%, rgba(0, 212, 255, .14), transparent 60%),
+        linear-gradient(135deg, rgba(38, 38, 38, .92), rgba(13, 13, 13, .92));
+      position: relative;
     }
-    .turf-visual::before{
-      content:"";
-      position:absolute; inset: 14px;
+
+    .turf-visual::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
       border-radius: 14px;
       background:
-        repeating-linear-gradient(90deg, rgba(255,255,255,.12) 0 1px, transparent 1px 52px),
-        repeating-linear-gradient(0deg, rgba(255,255,255,.10) 0 1px, transparent 1px 52px);
-      opacity:.25;
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .12) 0 1px, transparent 1px 52px),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, .10) 0 1px, transparent 1px 52px);
+      opacity: .25;
       mask-image: radial-gradient(70% 70% at 50% 45%, #000 0 62%, transparent 100%);
       -webkit-mask-image: radial-gradient(70% 70% at 50% 45%, #000 0 62%, transparent 100%);
     }
 
-    .badge{
-      position:absolute;
+    .badge {
+      position: absolute;
       top: 12px;
-      display:inline-flex; align-items:center; gap: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       padding: 8px 10px;
       border-radius: 999px;
       font-weight: 900;
       font-size: 12px;
       letter-spacing: .02em;
-      background: rgba(0,0,0,.58);
-      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0, 0, 0, .58);
+      border: 1px solid rgba(255, 255, 255, .12);
       backdrop-filter: blur(10px);
     }
-    .badge.rating{left: 12px}
-    .badge.rating i{color:#FFB800}
-    .badge.verified{
+
+    .badge.rating {
+      left: 12px
+    }
+
+    .badge.rating i {
+      color: #FFB800
+    }
+
+    .badge.verified {
       right: 12px;
-      background: rgba(0,212,255,.16);
-      border-color: rgba(0,212,255,.30);
+      background: rgba(0, 212, 255, .16);
+      border-color: rgba(0, 212, 255, .30);
       color: var(--text-primary);
     }
-    .badge.verified i{color: var(--accent-primary)}
 
-    .turf-body{
+    .badge.verified i {
+      color: var(--accent-primary)
+    }
+
+    .turf-body {
       padding: 16px;
-      display:flex;
-      flex-direction:column;
+      display: flex;
+      flex-direction: column;
       gap: 10px;
-      flex:1;
+      flex: 1;
     }
-    .turf-title{
-      display:flex; align-items:flex-start; justify-content:space-between; gap: 10px;
+
+    .turf-title {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
     }
-    .turf-title h3{font-size: 18px; line-height:1.2}
-    .turf-loc{
-      display:flex; align-items:center; gap: 8px;
+
+    .turf-title h3 {
+      font-size: 18px;
+      line-height: 1.2
+    }
+
+    .turf-loc {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       color: var(--text-secondary);
       font-size: 13px;
     }
-    .turf-loc i{color: rgba(0,212,255,.85)}
-    .price{
+
+    .turf-loc i {
+      color: rgba(0, 212, 255, .85)
+    }
+
+    .price {
       font-weight: 1000;
       font-size: 18px;
       color: var(--accent-primary);
-      white-space:nowrap;
+      white-space: nowrap;
     }
-    .price span{font-weight:700; font-size: 12px; color: var(--text-muted)}
 
-    .facilities{
-      display:flex; gap: 10px; flex-wrap:wrap;
+    .price span {
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--text-muted)
+    }
+
+    .facilities {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
       margin-top: 2px;
     }
-    .facility{
-      width: 36px; height: 36px;
+
+    .facility {
+      width: 36px;
+      height: 36px;
       border-radius: 14px;
-      display:grid; place-items:center;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.10);
-      color: rgba(255,255,255,.80);
-      position:relative;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .10);
+      color: rgba(255, 255, 255, .80);
+      position: relative;
       transition: var(--transition-fast);
-      text-decoration:none;
+      text-decoration: none;
     }
-    .facility:hover{
-      border-color: rgba(0,212,255,.30);
-      background: rgba(0,212,255,.10);
+
+    .facility:hover {
+      border-color: rgba(0, 212, 255, .30);
+      background: rgba(0, 212, 255, .10);
       transform: translateY(-1px);
       color: var(--text-primary);
     }
-    .facility[data-tip]::after{
+
+    .facility[data-tip]::after {
       content: attr(data-tip);
-      position:absolute;
+      position: absolute;
       left: 50%;
       bottom: calc(100% + 10px);
       transform: translateX(-50%) translateY(4px);
-      opacity:0;
-      pointer-events:none;
-      white-space:nowrap;
+      opacity: 0;
+      pointer-events: none;
+      white-space: nowrap;
       font-size: 12px;
       font-weight: 800;
-      letter-spacing:.02em;
+      letter-spacing: .02em;
       color: var(--text-primary);
       padding: 8px 10px;
       border-radius: 12px;
-      background: rgba(13,13,13,.92);
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      background: rgba(13, 13, 13, .92);
+      border: 1px solid rgba(255, 255, 255, .12);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, .55);
       transition: var(--transition-fast);
       backdrop-filter: blur(12px);
     }
-    .facility[data-tip]::before{
-      content:"";
-      position:absolute;
-      left:50%;
+
+    .facility[data-tip]::before {
+      content: "";
+      position: absolute;
+      left: 50%;
       bottom: calc(100% + 2px);
       transform: translateX(-50%);
-      opacity:0;
-      width: 10px; height: 10px;
-      background: rgba(13,13,13,.92);
-      border-left: 1px solid rgba(255,255,255,.12);
-      border-top: 1px solid rgba(255,255,255,.12);
-      transform-origin:center;
+      opacity: 0;
+      width: 10px;
+      height: 10px;
+      background: rgba(13, 13, 13, .92);
+      border-left: 1px solid rgba(255, 255, 255, .12);
+      border-top: 1px solid rgba(255, 255, 255, .12);
+      transform-origin: center;
       rotate: 45deg;
       transition: var(--transition-fast);
     }
+
     .facility:hover::after,
-    .facility:hover::before{
-      opacity:1;
+    .facility:hover::before {
+      opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
 
-    .turf-actions{
-      margin-top:auto;
-      display:flex; align-items:center; justify-content:space-between; gap: 12px;
+    .turf-actions {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
       padding-top: 10px;
-      border-top: 1px solid rgba(255,255,255,.08);
+      border-top: 1px solid rgba(255, 255, 255, .08);
     }
-    .viewlink{
-      display:inline-flex; align-items:center; gap: 10px;
+
+    .viewlink {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       font-weight: 900;
-      text-decoration:none;
+      text-decoration: none;
       padding: 10px 12px;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(255, 255, 255, .03);
       transition: var(--transition-fast);
-      white-space:nowrap;
+      white-space: nowrap;
     }
-    .viewlink:hover{
-      border-color: rgba(0,212,255,.30);
-      background: rgba(0,212,255,.08);
+
+    .viewlink:hover {
+      border-color: rgba(0, 212, 255, .30);
+      background: rgba(0, 212, 255, .08);
       transform: translateY(-1px);
     }
 
     /* 3 columns on wide */
-    @media (min-width: 1120px){
-      .turf{grid-column: span 4}
+    @media (min-width: 1120px) {
+      .turf {
+        grid-column: span 4
+      }
     }
+
     /* 1 column on small */
-    @media (max-width: 640px){
-      .turf{grid-column: span 12}
-      .sort select{min-width: 150px}
+    @media (max-width: 640px) {
+      .turf {
+        grid-column: span 12
+      }
+
+      .sort select {
+        min-width: 150px
+      }
     }
 
     /* =======================
        LOAD MORE
     ======================= */
-    .load-more-wrap{
-      display:flex;
-      justify-content:center;
+    .load-more-wrap {
+      display: flex;
+      justify-content: center;
       margin-top: 22px;
     }
-    .btn-lg{height:56px; padding:0 22px; font-size: 16px}
+
+    .btn-lg {
+      height: 56px;
+      padding: 0 22px;
+      font-size: 16px
+    }
 
     /* =======================
        REVEAL ON SCROLL
     ======================= */
-    @media (prefers-reduced-motion: no-preference){
-      .reveal{
-        opacity:0;
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal {
+        opacity: 0;
         transform: translateY(10px);
-        transition: opacity 520ms cubic-bezier(.2,.8,.2,1), transform 520ms cubic-bezier(.2,.8,.2,1);
+        transition: opacity 520ms cubic-bezier(.2, .8, .2, 1), transform 520ms cubic-bezier(.2, .8, .2, 1);
       }
-      .reveal.in{opacity:1; transform: translateY(0)}
+
+      .reveal.in {
+        opacity: 1;
+        transform: translateY(0)
+      }
     }
   </style>
 </head>
@@ -708,8 +1014,8 @@
             </button>
             <div class="profile-menu" id="profileMenu" role="menu" aria-label="Profile menu">
               <a role="menuitem" href="playerlogin.html">My Profile</a>
-<a role="menuitem" href="bookinghistorypage.html">My Bookings</a>
-<a role="menuitem" href="playerlogin.html">Logout</a>
+              <a role="menuitem" href="bookinghistorypage.html">My Bookings</a>
+              <a role="menuitem" href="playerlogin.html">Logout</a>
 
             </div>
           </div>
@@ -741,7 +1047,8 @@
           <aside class="filters reveal" id="filters" data-collapsed="true" aria-label="Filters">
             <div class="filters-head">
               <h2>Filters</h2>
-              <button class="filters-toggle" id="filtersToggle" type="button" aria-controls="filtersBody" aria-expanded="false">
+              <button class="filters-toggle" id="filtersToggle" type="button" aria-controls="filtersBody"
+                aria-expanded="false">
                 <span><i class="fa-solid fa-sliders"></i> Show Filters</span>
                 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
               </button>
@@ -752,8 +1059,8 @@
                 <div class="group-title"><i class="fa-solid fa-location-dot"></i> Location</div>
                 <label class="sr-only" for="locationSelect">Location</label>
                 <select id="locationSelect" class="select">
-                  <option value="all">All Locations</option>
-                  <option value="mumbai" selected>Mumbai</option>
+                  <option value="all" selected>All Locations</option>
+                  <option value="mumbai">Mumbai</option>
                   <option value="andheri">Andheri</option>
                   <option value="bandra">Bandra</option>
                   <option value="powai">Powai</option>
@@ -775,8 +1082,10 @@
                 </div>
 
                 <div class="filter-actions">
-                  <button class="btn btn-primary" id="applyBtn" type="button"><i class="fa-solid fa-check"></i> Apply</button>
-                  <button class="btn btn-secondary" id="clearBtn" type="button"><i class="fa-solid fa-rotate-left"></i> Clear</button>
+                  <button class="btn btn-primary" id="applyBtn" type="button"><i class="fa-solid fa-check"></i>
+                    Apply</button>
+                  <button class="btn btn-secondary" id="clearBtn" type="button"><i class="fa-solid fa-rotate-left"></i>
+                    Clear</button>
                 </div>
               </div>
             </div>
@@ -799,7 +1108,7 @@
             </div>
 
             <div class="cards" id="cards">
-              <!-- Cards injected by JS -->
+              <!-- Cards dynamically injected by JS -->
             </div>
 
             <div class="load-more-wrap reveal">
@@ -812,55 +1121,27 @@
       </div>
     </section>
   </main>
-
+  {{ turf_json|json_script:"turf-data" }}
   <script>
     // ---------------------------
     // Data (demo)
     // ---------------------------
-    const ALL_TURFS = [
-      { id: 1,  name: "Green Arena",      area: "Andheri W", city: "Mumbai", locationKey: "andheri", price: 800,  rating: 4.8, facilities: ["parking","lights","shower","wifi"], verified: true },
-      { id: 2,  name: "Sports Hub",       area: "Bandra E",  city: "Mumbai", locationKey: "bandra",  price: 1200, rating: 4.6, facilities: ["parking","lights","cafe"],            verified: true },
-      { id: 3,  name: "Prime Turf",       area: "Powai",     city: "Mumbai", locationKey: "powai",   price: 1500, rating: 4.9, facilities: ["parking","lights","shower"],         verified: true },
-      { id: 4,  name: "Game Zone",        area: "Juhu",      city: "Mumbai", locationKey: "juhu",    price: 900,  rating: 4.5, facilities: ["lights","cafe","wifi"],                 verified: true },
-
-      { id: 5,  name: "City Sports Arena",area: "Lower Parel",city:"Mumbai",  locationKey: "mumbai",  price: 1100, rating: 4.7, facilities: ["parking","lights","shower"],         verified: true },
-      { id: 6,  name: "Night Play Field", area: "Andheri E",  city: "Mumbai", locationKey: "andheri", price: 950,  rating: 4.4, facilities: ["lights","wifi"],                        verified: true },
-      { id: 7,  name: "Harbor KickOff",   area: "Bandra W",   city: "Mumbai", locationKey: "bandra",  price: 1400, rating: 4.7, facilities: ["parking","lights","cafe","wifi"],     verified: true },
-      { id: 8,  name: "Lakeview Turf",    area: "Powai",     city: "Mumbai", locationKey: "powai",   price: 1000, rating: 4.6, facilities: ["parking","lights","wifi"],           verified: true },
-
-      { id: 9,  name: "Juhu Sprint",      area: "Juhu",      city: "Mumbai", locationKey: "juhu",    price: 1300, rating: 4.8, facilities: ["lights","shower","cafe"],            verified: true },
-      { id:10,  name: "Thane Sports Deck",area: "Thane West", city: "Mumbai", locationKey: "thane",   price: 750,  rating: 4.3, facilities: ["parking","wifi"],                        verified: true },
-      { id:11,  name: "Central 7s",       area: "Dadar",     city: "Mumbai", locationKey: "mumbai",  price: 900,  rating: 4.4, facilities: ["parking","lights"],                      verified: true },
-      { id:12,  name: "Metro Playbox",    area: "Andheri W",  city: "Mumbai", locationKey: "andheri", price: 1600, rating: 4.8, facilities: ["parking","lights","shower","wifi","cafe"], verified: true },
-
-      // extra to reach 24
-      { id:13, name:"Bayside Arena",      area:"Worli",      city:"Mumbai", locationKey:"mumbai", price: 1250, rating:4.6, facilities:["lights","shower","wifi"], verified:true },
-      { id:14, name:"Eastside Kick",      area:"Sion",       city:"Mumbai", locationKey:"mumbai", price: 700,  rating:4.2, facilities:["parking","lights"], verified:true },
-      { id:15, name:"Andheri Strikers",   area:"Andheri E",  city:"Mumbai", locationKey:"andheri",price: 1050, rating:4.5, facilities:["parking","lights","wifi"], verified:true },
-      { id:16, name:"Bandra ProTurf",     area:"Bandra E",   city:"Mumbai", locationKey:"bandra", price: 1700, rating:4.9, facilities:["parking","lights","cafe"], verified:true },
-      { id:17, name:"Powai Elite",        area:"Powai",      city:"Mumbai", locationKey:"powai",  price: 1450, rating:4.7, facilities:["parking","lights","shower"], verified:true },
-      { id:18, name:"Juhu Floodlights",   area:"Juhu",       city:"Mumbai", locationKey:"juhu",   price: 980,  rating:4.4, facilities:["lights","wifi"], verified:true },
-      { id:19, name:"Thane PlayPark",     area:"Thane East", city:"Mumbai", locationKey:"thane",  price: 820,  rating:4.5, facilities:["parking","lights","wifi"], verified:true },
-      { id:20, name:"South Turf Studio",  area:"Colaba",     city:"Mumbai", locationKey:"mumbai", price: 1900, rating:4.8, facilities:["parking","lights","shower","cafe"], verified:true },
-      { id:21, name:"West End Arena",     area:"Andheri W",  city:"Mumbai", locationKey:"andheri",price: 1150, rating:4.6, facilities:["parking","lights","cafe","wifi"], verified:true },
-      { id:22, name:"Bandra MatchPoint",  area:"Bandra W",   city:"Mumbai", locationKey:"bandra", price: 1350, rating:4.7, facilities:["lights","shower"], verified:true },
-      { id:23, name:"Powai Turf House",   area:"Powai",      city:"Mumbai", locationKey:"powai",  price: 900,  rating:4.3, facilities:["parking","wifi"], verified:true },
-      { id:24, name:"Thane Night League", area:"Thane West", city:"Mumbai", locationKey:"thane",  price: 1200, rating:4.6, facilities:["parking","lights","shower","wifi"], verified:true },
-    ];
-
+    const ALL_TURFS = JSON.parse(
+      document.getElementById("turf-data").textContent
+    );
     const facilityIcon = {
       parking: { icon: "fa-square-parking", tip: "Parking" },
-      lights:  { icon: "fa-lightbulb",      tip: "Floodlights" },
-      shower:  { icon: "fa-shower",         tip: "Shower" },
-      wifi:    { icon: "fa-wifi",           tip: "Wi‑Fi" },
-      cafe:    { icon: "fa-mug-hot",        tip: "Café" }
+      lights: { icon: "fa-lightbulb", tip: "Floodlights" },
+      shower: { icon: "fa-shower", tip: "Shower" },
+      wifi: { icon: "fa-wifi", tip: "Wi‑Fi" },
+      cafe: { icon: "fa-mug-hot", tip: "Café" }
     };
 
     // ---------------------------
     // State
     // ---------------------------
     const state = {
-      location: "mumbai",
+      location: "all",
       maxPrice: 2000,
       sort: "recommended",
       pageSize: 6,
@@ -891,34 +1172,33 @@
     // ---------------------------
     // Helpers
     // ---------------------------
-    function formatINR(n){ return "₹" + n.toString(); }
+    function formatINR(n) { return "₹" + n.toString(); }
 
-    function matchesLocation(turf, loc){
-      if(loc === "all") return true;
-      if(loc === "mumbai") return turf.city.toLowerCase() === "mumbai";
+    function matchesLocation(turf, loc) {
+      if (loc === "all") return true;
       return turf.locationKey === loc;
     }
 
-    function applyFilters(){
+    function applyFilters() {
       const list = ALL_TURFS
         .filter(t => matchesLocation(t, state.location))
         .filter(t => t.price <= state.maxPrice);
 
       // Sort
       let sorted = [...list];
-      switch(state.sort){
+      switch (state.sort) {
         case "rating":
-          sorted.sort((a,b)=> b.rating - a.rating);
+          sorted.sort((a, b) => b.rating - a.rating);
           break;
         case "priceLow":
-          sorted.sort((a,b)=> a.price - b.price);
+          sorted.sort((a, b) => a.price - b.price);
           break;
         case "priceHigh":
-          sorted.sort((a,b)=> b.price - a.price);
+          sorted.sort((a, b) => b.price - a.price);
           break;
         default:
           // recommended: blend rating + affordability
-          sorted.sort((a,b)=> (b.rating*100 - b.price/30) - (a.rating*100 - a.price/30));
+          sorted.sort((a, b) => (b.rating * 100 - b.price / 30) - (a.rating * 100 - a.price / 30));
       }
 
       state.filtered = sorted;
@@ -928,7 +1208,7 @@
       renderNextPage(true);
     }
 
-    function cardVisualSeed(id){
+    function cardVisualSeed(id) {
       // deterministic hue shift based on id (no external images)
       const hue = (id * 37) % 360;
       return `
@@ -939,10 +1219,10 @@
       `;
     }
 
-    function createCard(t){
+    function createCard(t) {
       const facs = t.facilities.map(key => {
         const meta = facilityIcon[key];
-        if(!meta) return "";
+        if (!meta) return "";
         return `
           <a class="facility" href="#" tabindex="-1" aria-label="${meta.tip}" data-tip="${meta.tip}">
             <i class="fa-solid ${meta.icon}" aria-hidden="true"></i>
@@ -961,10 +1241,12 @@
           <div class="turf-title">
             <div>
               <h3>${t.name}</h3>
-              <div class="turf-loc"><i class="fa-solid fa-location-dot"></i> ${t.area}, ${t.city}</div>
+              <div class="turf-loc"><i class="fa-solid fa-location-dot"></i> ${t.city}, ${t.state}</div>
             </div>
             <div class="price">${formatINR(t.price)} <span>/hr</span></div>
           </div>
+          
+          <p style="font-size: 13px; color: var(--text-secondary); margin-top: 5px;">${t.description}</p>
 
           <div class="facilities" aria-label="Facilities for ${t.name}">
             ${facs}
@@ -972,7 +1254,7 @@
 
           <div class="turf-actions">
             <span class="muted" style="font-weight:800; font-size:13px">Fast booking • Instant confirmation</span>
-            <a class="viewlink" href="turfdetail.html?id=${encodeURIComponent(t.id)}">
+            <a class="viewlink" href="/turf/${t.id}/">
               View <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
             </a>
           </div>
@@ -981,25 +1263,25 @@
       return article;
     }
 
-    function renderNextPage(clear){
-      if(clear) cards.innerHTML = "";
+    function renderNextPage(clear) {
+      if (clear) cards.innerHTML = "";
 
       const remaining = state.filtered.length - state.shown;
       const take = Math.min(state.pageSize, remaining);
 
-      for(let i=0; i<take; i++){
+      for (let i = 0; i < take; i++) {
         const t = state.filtered[state.shown + i];
         cards.appendChild(createCard(t));
       }
       state.shown += take;
 
-      if(state.shown >= state.filtered.length){
+      if (state.shown >= state.filtered.length) {
         loadMoreBtn.disabled = true;
         loadMoreBtn.classList.add("is-disabled");
         loadMoreBtn.innerHTML = `<i class="fa-solid fa-check"></i> All turfs loaded`;
         loadMoreBtn.style.opacity = ".7";
         loadMoreBtn.style.cursor = "not-allowed";
-      }else{
+      } else {
         loadMoreBtn.disabled = false;
         loadMoreBtn.innerHTML = `<i class="fa-solid fa-plus"></i> Load More Turfs`;
         loadMoreBtn.style.opacity = "1";
@@ -1018,10 +1300,18 @@
     priceRange.addEventListener("input", () => {
       state.maxPrice = Number(priceRange.value);
       maxPriceText.textContent = formatINR(state.maxPrice);
+      applyFilters();
     });
 
-    locationSelect.addEventListener("change", () => state.location = locationSelect.value);
-    sortSelect.addEventListener("change", () => { state.sort = sortSelect.value; applyFilters(); });
+    locationSelect.addEventListener("change", () => {
+      state.location = locationSelect.value;
+      applyFilters();
+    });
+
+    sortSelect.addEventListener("change", () => {
+      state.sort = sortSelect.value;
+      applyFilters();
+    });
 
     applyBtn.addEventListener("click", () => applyFilters());
 
@@ -1041,15 +1331,15 @@
     loadMoreBtn.addEventListener("click", () => renderNextPage(false));
 
     // Mobile filters toggle
-    function setFiltersCollapsed(collapsed){
+    function setFiltersCollapsed(collapsed) {
       filters.dataset.collapsed = collapsed ? "true" : "false";
       filtersToggle.setAttribute("aria-expanded", String(!collapsed));
       filtersToggle.querySelector("span").innerHTML = collapsed
         ? `<i class="fa-solid fa-sliders"></i> Show Filters`
         : `<i class="fa-solid fa-sliders"></i> Hide Filters`;
       const chevron = filtersToggle.querySelector(".fa-chevron-down");
-      if(chevron) chevron.style.transform = collapsed ? "rotate(0deg)" : "rotate(180deg)";
-      if(chevron) chevron.style.transition = "transform 170ms cubic-bezier(.2,.8,.2,1)";
+      if (chevron) chevron.style.transform = collapsed ? "rotate(0deg)" : "rotate(180deg)";
+      if (chevron) chevron.style.transition = "transform 170ms cubic-bezier(.2,.8,.2,1)";
     }
     filtersToggle.addEventListener("click", () => {
       const collapsed = filters.dataset.collapsed === "true";
@@ -1057,9 +1347,9 @@
     });
 
     // Profile dropdown interactions
-    function closeProfile(){
+    function closeProfile() {
       profile.classList.remove("open");
-      profileBtn.setAttribute("aria-expanded","false");
+      profileBtn.setAttribute("aria-expanded", "false");
     }
     profileBtn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -1067,19 +1357,19 @@
       profileBtn.setAttribute("aria-expanded", String(open));
     });
     document.addEventListener("click", closeProfile);
-    document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeProfile(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeProfile(); });
 
     // Scroll reveal via IO (more robust than immediate)
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(ent=>{
-        if(ent.isIntersecting){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(ent => {
+        if (ent.isIntersecting) {
           ent.target.classList.add("in");
           io.unobserve(ent.target);
         }
       });
     }, { threshold: 0.12 });
 
-    function observeNew(){
+    function observeNew() {
       document.querySelectorAll(".reveal:not(.in)").forEach(el => io.observe(el));
     }
 
@@ -1093,4 +1383,5 @@
     mo.observe(cards, { childList: true });
   </script>
 </body>
+
 </html>

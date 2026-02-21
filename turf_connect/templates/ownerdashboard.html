@@ -647,6 +647,14 @@
                 <p><i class="fa-solid fa-location-dot"></i> {{ turf.city }}, {{ turf.state }}</p>
               </div>
               <div style="display:flex; align-items:center; gap:12px;">
+                {% if turf.status == 'approved' %}
+                <a href="{% url 'slot_management' turf.id %}"
+                  style="padding:6px 14px; background:var(--bg-tertiary); border:1px solid #404040; border-radius:8px; color:#fff; font-size:13px; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:6px; transition:all 0.2s ease;"
+                  onmouseover="this.style.borderColor='var(--accent-primary)'; this.style.color='var(--accent-primary)';"
+                  onmouseout="this.style.borderColor='#404040'; this.style.color='#fff';">
+                  <i class="fa-solid fa-calendar-days"></i> Manage Slots
+                </a>
+                {% endif %}
                 {% if turf.status == 'rejected' %}
                 <a href="{% url 'edit_turf' turf.id %}"
                   style="padding:6px 14px; background:var(--bg-tertiary); border:1px solid #404040; border-radius:8px; color:#fff; font-size:13px; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:6px; transition:all 0.2s ease;"
