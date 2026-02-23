@@ -44,10 +44,6 @@ class Turf(models.Model):
 class Slot(models.Model):
     """Represents a bookable time slot for a turf."""
 
-    class Status(models.TextChoices):
-        AVAILABLE = 'available', 'Available'
-        BOOKED = 'booked', 'Booked'
-
     turf = models.ForeignKey(
         Turf,
         on_delete=models.CASCADE,
@@ -57,14 +53,26 @@ class Slot(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     price = models.DecimalField(max_digits=8, decimal_places=2)
+    label = models.CharField(max_length=100, blank=True, default='')
+    is_booked = models.BooleanField(default=False)
     status = models.CharField(
-        max_length=10,
-        choices=Status.choices,
-        default=Status.AVAILABLE,
+        max_length=20,
+        choices=[
+            ("available", "Available"),
+            ("held", "Held"),
+            ("booked", "Booked")
+        ],
+        default="available"
     )
+    hold_expiry = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        # turf + date + start_time must be unique
+        unique_together = ('turf', 'date', 'start_time')
 
     def __str__(self):
-        return f"{self.turf.name} | {self.date} {self.start_time}–{self.end_time} ({self.get_status_display()})"
+        status = "Booked" if self.is_booked else "Available"
+        return f"{self.turf.name} | {self.date} {self.start_time}–{self.end_time} ({status})"
 
 
 class TurfImage(models.Model):

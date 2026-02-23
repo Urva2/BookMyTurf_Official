@@ -396,177 +396,409 @@
       border-bottom: none;
     }
 
-    /* SLOT PICKER */
-    .slot-picker {
+    /* NEW SLOT BOOKING UI STYLES */
+    .slot-booking-wrapper {
       background: var(--bg-secondary);
       border-radius: var(--radius-card);
-      padding: 24px 28px;
+      padding: 32px;
       margin-bottom: 48px;
       box-shadow: var(--shadow-default);
-      max-width: 720px;
+      position: relative;
     }
 
-    .slot-picker h2 {
-      font-size: 22px;
-      margin-bottom: 20px;
-      color: var(--text-primary);
-    }
-
-    .date-nav {
+    .booking-header {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      gap: 24px;
       margin-bottom: 24px;
-      user-select: none;
-    }
-
-    .date-nav button {
-      background: transparent;
-      border: none;
-      color: var(--accent-primary);
-      font-size: 24px;
-      cursor: pointer;
-      transition: var(--transition-fast);
-      padding: 4px 12px;
-      border-radius: 12px;
-    }
-
-    .date-nav button:hover {
-      background: rgba(0, 212, 255, 0.15);
-      transform: scale(1.1);
-    }
-
-    .date-display {
-      font-weight: 700;
-      font-size: 18px;
-      color: var(--text-primary);
-      min-width: 180px;
-      text-align: center;
-    }
-
-    .slots-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      flex-wrap: wrap;
       gap: 16px;
     }
 
-    .slot {
-      background: var(--bg-tertiary);
-      border-radius: var(--radius-button);
-      padding: 14px 12px;
-      text-align: center;
-      font-weight: 700;
-      font-size: 14px;
-      color: var(--text-primary);
-      cursor: pointer;
-      user-select: none;
-      position: relative;
-      border: 2px solid transparent;
-      transition: var(--transition-fast);
-      box-shadow: 0 0 0 0 transparent;
+    .booking-header h2 {
+      font-size: 24px;
+      margin: 0;
     }
 
-    .slot .time {
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    .slot .price {
-      font-weight: 600;
+    .status-legend {
+      display: flex;
+      gap: 16px;
       font-size: 13px;
-      color: var(--accent-primary);
+      font-weight: 600;
+      color: var(--text-secondary);
     }
 
-    .slot.booked {
-      background: #3a3a3a;
-      color: var(--text-muted);
-      cursor: not-allowed;
-      position: relative;
-    }
-
-    .slot.booked::after {
-      content: "BOOKED";
-      position: absolute;
-      inset: 0;
-      background: rgba(255, 71, 87, 0.7);
-      color: white;
-      font-weight: 900;
-      font-size: 12px;
+    .legend-item {
       display: flex;
       align-items: center;
-      justify-content: center;
-      border-radius: var(--radius-button);
-      pointer-events: none;
-      letter-spacing: 0.1em;
+      gap: 6px;
     }
 
-    /* Pulse animation on selected */
-    input[type="radio"] {
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .dot.open {
+      background-color: var(--accent-primary);
+      box-shadow: 0 0 6px var(--accent-glow);
+    }
+
+    .dot.held {
+      background-color: #FFB800;
+    }
+
+    .dot.booked {
+      background-color: #FF4757;
+    }
+
+    /* 7-Day Date Selector */
+    .date-selector-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 32px;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .date-selector-scroll::-webkit-scrollbar {
       display: none;
     }
 
-    input[type="radio"]:checked+label.slot {
-      border-color: var(--accent-primary);
-      box-shadow: 0 0 12px var(--accent-glow);
-      animation: pulse 2s infinite;
-      z-index: 1;
-      position: relative;
-    }
-
-    @keyframes pulse {
-
-      0%,
-      100% {
-        box-shadow: 0 0 12px var(--accent-glow);
-      }
-
-      50% {
-        box-shadow: 0 0 24px var(--accent-glow);
-      }
-    }
-
-    /* Selected info and proceed button */
-    .selection-info {
-      margin-top: 20px;
-      font-weight: 700;
-      font-size: 16px;
-      color: var(--text-primary);
+    .date-col {
+      flex: 0 0 70px;
       display: flex;
-      justify-content: space-between;
-      max-width: 720px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 0 28px;
-    }
-
-    .btn-primary {
-      display: block;
-      max-width: 280px;
-      margin: 32px auto 0;
-      background-color: var(--accent-primary);
-      color: #000;
-      font-weight: 700;
-      font-size: 18px;
-      padding: 14px 0;
-      border-radius: var(--radius-button);
-      text-align: center;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 8px;
+      background: var(--bg-tertiary);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
       cursor: pointer;
-      box-shadow: var(--shadow-button);
-      transition: var(--transition-fast);
+      transition: var(--transition-medium);
       user-select: none;
     }
 
+    .date-col:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-2px);
+    }
+
+    .date-col.active {
+      background: var(--accent-primary);
+      color: #000;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .date-day {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      opacity: 0.8;
+    }
+
+    .date-num {
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    .date-month {
+      font-size: 11px;
+      font-weight: 700;
+      opacity: 0.8;
+    }
+
+    .date-col.active .date-day,
+    .date-col.active .date-month {
+      opacity: 1;
+    }
+
+    /* Slots Grid Redesign */
+    .slots-grid-redesign {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .slot-card {
+      background: var(--bg-tertiary);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: var(--transition-fast);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .slot-card.open {
+      border-color: var(--accent-primary);
+    }
+
+    .slot-card.open:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .slot-card.booked {
+      opacity: 0.7;
+      background: rgba(255, 71, 87, 0.05);
+      border-color: rgba(255, 71, 87, 0.2);
+      cursor: not-allowed;
+    }
+
+    .slot-card.held {
+      border-color: #FFB800;
+      cursor: not-allowed;
+    }
+
+    .slot-time {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .slot-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .slot-price {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent-primary);
+    }
+
+    .slot-card.booked .slot-price {
+      color: #FF4757;
+    }
+
+    .status-badge {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-badge.open {
+      background: rgba(0, 212, 255, 0.1);
+      color: var(--accent-primary);
+    }
+
+    .status-badge.booked {
+      background: rgba(255, 71, 87, 0.2);
+      color: #FF4757;
+    }
+
+    .status-badge.held {
+      background: rgba(255, 184, 0, 0.2);
+      color: #FFB800;
+    }
+
+    .slot-card.held {
+      border-color: #FFB800;
+      box-shadow: 0 0 15px rgba(255, 184, 0, 0.15);
+      cursor: not-allowed;
+    }
+
+    /* Booking Grid Layout */
+    .booking-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .booking-main {
+      min-width: 0;
+    }
+
+    .booking-sidebar {
+      position: sticky;
+      top: 32px;
+    }
+
+    .sidebar-card {
+      background: #121212;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      border-right: 2px solid rgba(57, 255, 20, 0.1);
+      border-bottom: 2px solid rgba(57, 255, 20, 0.1);
+    }
+
+    .sidebar-header h3 {
+      font-size: 20px;
+      margin-bottom: 24px;
+      color: var(--text-primary);
+    }
+
+    .sidebar-price-preview {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .sidebar-price-preview .label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .sidebar-price-preview .value {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--accent-primary);
+    }
+
+    .sidebar-price-preview .unit {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .selected-info-box {
+      margin-bottom: 24px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .info-row .label {
+      color: var(--text-secondary);
+    }
+
+    .info-row .value {
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .info-row.total .value {
+      font-size: 18px;
+      color: var(--accent-primary);
+    }
+
+    .sidebar-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .btn-primary {
+      background: #4CAF50;
+      color: #000;
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
     .btn-primary:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 30px var(--accent-glow);
+      background: #66BB6A;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
     }
 
-    .btn-primary:active {
-      transform: scale(0.98);
+    .btn-primary:disabled {
+      background: var(--bg-tertiary);
+      color: var(--text-muted);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
     }
 
-    /* MAP SECTION */
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .trust-badges {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .badge-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .badge-item i {
+      color: var(--accent-primary);
+      font-size: 14px;
+    }
+
+    /* Empty State */
+    .slots-empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-muted);
+    }
+
+    .slots-empty-state i {
+      font-size: 40px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    /* REVIEWS */
     .map-section {
       margin-bottom: 48px;
       max-width: 900px;
@@ -729,6 +961,15 @@
 
       .map-section {
         max-width: 100%;
+      }
+
+      .booking-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .booking-sidebar {
+        position: static;
       }
     }
 
@@ -898,72 +1139,282 @@
       </table>
     </section>
 
-    <!-- SLOT PICKER -->
-    <section class="slot-picker" aria-labelledby="slot-picker-title">
-      <h2 id="slot-picker-title">Book a Slot</h2>
-
-      <form action="bookingsummary.html" novalidate>
-
-        <div class="date-nav" role="group" aria-label="Select booking date">
-          <button type="button" disabled>
-            <i class="fa-solid fa-chevron-left"></i>
-          </button>
-          <div class="date-display">Wed, Jan 8</div>
-          <button type="button">
-            <i class="fa-solid fa-chevron-right"></i>
-          </button>
-        </div>
-
-        <div class="slots-grid">
-
-          <input type="radio" id="slot1" name="slot" required />
-          <label for="slot1" class="slot">
-            <span class="time">6-7</span>
-            <span class="price">₹800</span>
-          </label>
-
-          <input type="radio" id="slot2" name="slot" />
-          <label for="slot2" class="slot">
-            <span class="time">7-8</span>
-            <span class="price">₹800</span>
-          </label>
-
-          <div class="slot booked">
-            <span class="time">8-9</span>
-            <span class="price">BOOKED</span>
+    <!-- SLOT BOOKING REDESIGN -->
+    <section class="slot-booking-wrapper" aria-labelledby="slot-picker-title">
+      <div class="booking-grid">
+        <!-- Main Content -->
+        <div class="booking-main">
+          <div class="booking-header">
+            <h2 id="slot-picker-title">Available Time Slots</h2>
+            <div class="status-legend">
+              <div class="legend-item"><span class="dot open"></span> Open</div>
+              <div class="legend-item"><span class="dot held"></span> Held</div>
+              <div class="legend-item"><span class="dot booked"></span> Booked</div>
+            </div>
           </div>
 
-          <input type="radio" id="slot4" name="slot" />
-          <label for="slot4" class="slot">
-            <span class="time">9-10</span>
-            <span class="price">₹800</span>
-          </label>
+          <!-- 7-Day Selector -->
+          <div class="date-selector-scroll" id="date-selector">
+            <!-- JS will populate these -->
+          </div>
 
-          <input type="radio" id="slot5" name="slot" />
-          <label for="slot5" class="slot">
-            <span class="time">10-11</span>
-            <span class="price">₹800</span>
-          </label>
+          <div id="slots-grid" class="slots-grid-redesign">
+            <!-- JS will populate slots for selected date here -->
+          </div>
 
-          <input type="radio" id="slot6" name="slot" />
-          <label for="slot6" class="slot">
-            <span class="time">11-12</span>
-            <span class="price">₹800</span>
-          </label>
-
+          <div id="empty-state" class="slots-empty-state" style="display: none;">
+            <i class="fa-regular fa-calendar-times"></i>
+            <p>No slots available for this date</p>
+          </div>
         </div>
 
-        <div class="selection-info">
-          <span>Selected Slot</span>
-          <span>Total: ₹800</span>
-        </div>
+        <!-- Sidebar Content -->
+        <aside class="booking-sidebar">
+          <form id="booking-form" action="" method="GET">
+            <input type="hidden" name="slot_id" id="selected-slot-id">
 
-        <button type="submit" class="btn-primary">
-          Proceed to Booking →
-        </button>
+            <div class="sidebar-card">
+              <div class="sidebar-header">
+                <h3>Book This Turf</h3>
+              </div>
 
-      </form>
+              <div class="sidebar-price-preview">
+                <span class="label">Starting from</span>
+                <span class="value">₹1000</span>
+                <span class="unit">/hr</span>
+              </div>
+
+              <div class="selected-info-box" id="sidebar-selection-display" style="display: none;">
+                <div class="info-row">
+                  <span class="label">Selected Slot:</span>
+                  <span class="value" id="sidebar-slot-time">8:00 AM - 9:00 AM</span>
+                </div>
+                <div class="info-row total">
+                  <span class="label">Total Amount:</span>
+                  <span class="value" id="sidebar-total-price">₹1200</span>
+                </div>
+              </div>
+
+              <div class="sidebar-actions">
+                <button type="submit" id="book-now-btn" class="btn-primary" disabled>
+                  <span>Select a Time Slot</span>
+                </button>
+                <div class="btn-row">
+                  <button type="button" class="btn-secondary">
+                    <i class="fa-solid fa-phone"></i> Call
+                  </button>
+                  <button type="button" class="btn-secondary">
+                    <i class="fa-solid fa-comment-dots"></i> Chat
+                  </button>
+                </div>
+              </div>
+
+              <div class="trust-badges">
+                <div class="badge-item">
+                  <i class="fa-solid fa-circle-check"></i>
+                  <span>Instant Confirmation</span>
+                </div>
+                <div class="badge-item">
+                  <i class="fa-solid fa-circle-check"></i>
+                  <span>Free Cancellation (24hrs)</span>
+                </div>
+                <div class="badge-item">
+                  <i class="fa-solid fa-circle-check"></i>
+                  <span>Secure Payment</span>
+                </div>
+              </div>
+            </div>
+          </form>
+        </aside>
+      </div>
     </section>
+
+    <script>
+      // Data passed from Django as JSON
+      const rawSlots = {{ slots_json| safe }};
+
+      // Current local time from metadata
+      const serverNow = new Date("{{ today|date:'Y-m-d' }}T{{ now_time|time:'H:i:s' }}");
+      const todayStr = "{{ today|date:'Y-m-d' }}";
+
+      let selectedDate = todayStr;
+      let selectedSlots = []; // Array to store multiple selected slot objects
+
+      function updateSidebar() {
+        const sidebarSelection = document.getElementById('sidebar-selection-display');
+        const sidebarSlotTime = document.getElementById('sidebar-slot-time');
+        const sidebarTotalPrice = document.getElementById('sidebar-total-price');
+        const btn = document.getElementById('book-now-btn');
+        const hiddenInput = document.getElementById('selected-slot-id');
+
+        if (selectedSlots.length === 0) {
+          sidebarSelection.style.display = 'none';
+          btn.disabled = true;
+          btn.innerHTML = '<span>Select a Time Slot</span>';
+          hiddenInput.value = '';
+          return;
+        }
+
+        sidebarSelection.style.display = 'block';
+
+        // Show comma-joined slot times
+        const timesText = selectedSlots.map(s => `${s.startDisp} - ${s.endDisp}`).join(', ');
+        sidebarSlotTime.textContent = timesText;
+
+        // Calculate total price
+        const total = selectedSlots.reduce((sum, s) => sum + parseFloat(s.price), 0);
+        sidebarTotalPrice.textContent = `₹${total}`;
+
+        // Store comma-separated IDs
+        hiddenInput.value = selectedSlots.map(s => s.id).join(',');
+
+        btn.disabled = false;
+        btn.innerHTML = `<span>Proceed to Booking (${selectedSlots.length})</span>`;
+      }
+
+      function renderSlots() {
+        const grid = document.getElementById('slots-grid');
+        const emptyState = document.getElementById('empty-state');
+
+        grid.innerHTML = '';
+
+        // Update starting price from rawSlots (remains same)
+        const prices = rawSlots.map(s => parseFloat(s.price));
+        if (prices.length > 0) {
+          const minPrice = Math.min(...prices);
+          document.querySelector('.sidebar-price-preview .value').textContent = `₹${minPrice}`;
+        }
+
+        const filteredSlots = rawSlots.filter(s => s.date === selectedDate);
+
+        if (filteredSlots.length === 0) {
+          emptyState.style.display = 'block';
+          return;
+        }
+
+        emptyState.style.display = 'none';
+
+        filteredSlots.forEach(slot => {
+          const card = document.createElement('div');
+          const status = slot.status || 'available';
+          const isSelected = selectedSlots.some(s => s.id === slot.id);
+
+          card.className = `slot-card ${status} ${isSelected ? 'selected' : ''}`;
+          card.setAttribute('data-slot-id', slot.id);
+          const statusDisplay = status.charAt(0).toUpperCase() + status.slice(1);
+
+          card.innerHTML = `
+            <div class="slot-time">${slot.startDisp} - ${slot.endDisp}</div>
+            <div class="slot-footer">
+              <div class="slot-price">₹${slot.price}</div>
+              <div class="status-badge ${status}">${statusDisplay}</div>
+            </div>
+          `;
+
+          // Custom selection styling for already selected slots
+          if (isSelected) {
+            card.style.borderColor = 'var(--accent-primary)';
+            card.style.boxShadow = '0 0 20px var(--accent-glow)';
+          }
+
+          if (status === 'available') {
+            card.onclick = () => {
+              const index = selectedSlots.findIndex(s => s.id === slot.id);
+
+              if (index > -1) {
+                // Deselect if already in the list
+                selectedSlots.splice(index, 1);
+              } else {
+                // Add if limit (3) not reached
+                if (selectedSlots.length >= 3) {
+                  alert("Maximum 3 slots allowed.");
+                  return;
+                }
+                selectedSlots.push(slot);
+              }
+
+              // Re-render and update UI
+              renderSlots();
+              updateSidebar();
+            };
+          } else if (status === 'held') {
+            card.style.opacity = '0.7';
+            card.title = "This slot is temporarily held by another user";
+          }
+          grid.appendChild(card);
+        });
+      }
+
+      function renderDates() {
+        const container = document.getElementById('date-selector');
+        container.innerHTML = '';
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        for (let i = 0; i < 7; i++) {
+          const d = new Date(serverNow);
+          d.setDate(serverNow.getDate() + i);
+          const yyyy = d.getFullYear();
+          const mm = String(d.getMonth() + 1).padStart(2, '0');
+          const dd = String(d.getDate()).padStart(2, '0');
+          const dateKey = `${yyyy}-${mm}-${dd}`;
+
+          const col = document.createElement('div');
+          col.className = `date-col ${dateKey === selectedDate ? 'active' : ''}`;
+          col.onclick = () => {
+            selectedDate = dateKey;
+            renderDates();
+            renderSlots();
+          };
+
+          col.innerHTML = `
+            <span class="date-day">${days[d.getDay()]}</span>
+            <span class="date-num">${d.getDate()}</span>
+            <span class="date-month">${months[d.getMonth()]}</span>
+          `;
+          container.appendChild(col);
+        }
+      }
+
+      // Initialize
+      renderDates();
+      renderSlots();
+
+      // Handle Booking Flow
+      document.getElementById('book-now-btn').addEventListener('click', function (e) {
+        e.preventDefault();
+        const slotIdsStr = document.getElementById('selected-slot-id').value;
+        if (!slotIdsStr) return;
+
+        const formData = new FormData();
+        formData.append('slot_id', slotIdsStr); // Send all IDs as comma-separated string
+
+        fetch('{% url "hold_slot" %}', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.status === 'success') {
+              window.location.href = '{% url "booking_summary" %}';
+            } else {
+              alert("One or more slots are no longer available.");
+              window.location.reload();
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert("An error occurred. Please try again.");
+          });
+      });
+
+      // Reload page on back-navigation to ensure slot status is fresh
+      window.addEventListener('pageshow', function (event) {
+        if (event.persisted) {
+          window.location.reload();
+        }
+      });
+    </script>
 
 
     <!-- MAP SECTION -->

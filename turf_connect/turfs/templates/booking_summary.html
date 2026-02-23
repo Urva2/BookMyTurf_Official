@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="padding: 100px 20px; text-align: center; color: white;">
+    <h1 style="color: var(--accent-primary); margin-bottom: 24px;">Booking Summary</h1>
+    <p style="font-size: 18px; opacity: 0.8; margin-bottom: 32px;">Your slot has been temporarily reserved for 5
+        minutes.</p>
+    <div
+        style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); display: inline-block; min-width: 300px;">
+        <h2 style="margin-bottom: 16px;">Next Steps:</h2>
+        <ul style="text-align: left; display: inline-block;">
+            <li>Complete payment within 5 minutes.</li>
+            <li>Check your email for confirmation.</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

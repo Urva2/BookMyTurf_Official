@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Slot Modal Partial</title>
+</head>
+
+<body>
+    {% if edit_slot_obj %}
+    <div class="modal-overlay">
+        <div class="modal-content content-card">
+            <h2 style="margin-bottom: 24px;">Edit Time Slot</h2>
+            <form method="POST" class="modal-form">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="edit_slot">
+                <input type="hidden" name="slot_id" value="{{ edit_slot_obj.id }}">
+
+                <div class="form-group">
+                    <label>Start Time</label>
+                    <input type="time" name="start_time" value="{{ edit_slot_obj.start_time|time:'H:i' }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>End Time</label>
+                    <input type="time" name="end_time" value="{{ edit_slot_obj.end_time|time:'H:i' }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Price (₹)</label>
+                    <input type="number" name="price" value="{{ edit_slot_obj.price }}" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Label (Optional)</label>
+                    <input type="text" name="label" value="{{ edit_slot_obj.label }}"
+                        placeholder="e.g. Morning Special">
+                </div>
+
+                <div class="modal-actions">
+                    <a href="?date={{ selected_date|date:'Y-m-d' }}" class="btn-cancel">Cancel</a>
+                    <button type="submit" class="btn-save">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+</body>
+
+</html>
