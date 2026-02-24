@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BookMyTurf | Secure Payment</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        /* RESET & BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0D0D0D;
+            color: #FFFFFF;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        :root {
+            --bg-primary: #0D0D0D;
+            --bg-secondary: #1A1A1A;
+            --bg-tertiary: #262626;
+            --accent-primary: #00D4FF;
+            --accent-glow: rgba(0, 212, 255, 0.3);
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3B3B3;
+            --radius-card: 16px;
+            --radius-button: 12px;
+            --radius-input: 10px;
+            --shadow-default: 0 8px 34px rgba(0, 0, 0, 0.45);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto 80px;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        h1.page-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+        }
+
+        /* INFO CARD */
+        .info-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-card);
+            padding: 32px;
+            box-shadow: var(--shadow-default);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .info-header {
+            border-bottom: 1.5px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 16px;
+            margin-bottom: 8px;
+        }
+
+        .info-header h2 {
+            font-size: 20px;
+            color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        .info-row strong {
+            color: var(--text-primary);
+        }
+
+        .total-row {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1.5px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent-primary);
+        }
+
+        /* PAYMENT FORM */
+        .payment-form-container {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-card);
+            padding: 32px;
+            box-shadow: var(--shadow-default);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .form-input {
+            width: 100%;
+            background: var(--bg-tertiary);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-input);
+            padding: 14px 18px;
+            color: var(--text-primary);
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        .btn-pay {
+            background-color: var(--accent-primary);
+            color: #000;
+            font-weight: 700;
+            font-size: 18px;
+            padding: 16px;
+            border-radius: var(--radius-button);
+            width: 100%;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-pay:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--accent-glow);
+        }
+
+        .timer-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent-primary);
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 960px) {
+            .payment-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="page-title">Finalize Payment</h1>
+
+        <div style="text-align: center;">
+            <div class="timer-badge">
+                <i class="fa-solid fa-clock"></i> Secure session expires in <span id="time-display">05:00</span>
+            </div>
+        </div>
+
+        <div class="payment-grid">
+            <!-- Left: Order Summary -->
+            <section class="info-card">
+                <div class="info-header">
+                    <h2><i class="fa-solid fa-receipt"></i> Booking Summary</h2>
+                </div>
+
+                <div class="info-row">
+                    <span>Turf</span>
+                    <strong>{{ booking.turf.name }}</strong>
+                </div>
+                <div class="info-row">
+                    <span>Date</span>
+                    <strong>{{ booking.date|date:"F j, Y" }}</strong>
+                </div>
+
+                <div style="margin: 8px 0;">
+                    <span class="form-label" style="margin-bottom: 8px;">Selected Slots</span>
+                    {% for slot in booking.slots.all %}
+                    <div class="info-row"
+                        style="margin-bottom: 4px; background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 8px;">
+                        <span>{{ slot.start_time|time:"g:i A" }} - {{ slot.end_time|time:"g:i A" }}</span>
+                        <strong>₹{{ slot.price }}</strong>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="total-row">
+                    <span>Amount Due</span>
+                    <span>₹{{ booking.total_amount }}</span>
+                </div>
+            </section>
+
+            <!-- Right: Payment Form -->
+            <section class="payment-form-container">
+                <form action="{% url 'payment_process' %}" method="POST">
+                    {% csrf_token %}
+
+                    {% if messages %}
+                    <div style="margin-bottom: 24px;">
+                        {% for message in messages %}
+                        <div
+                            style="background: rgba(255, 59, 48, 0.1); border: 1.5px solid rgba(255, 59, 48, 0.3); color: #FF3B30; padding: 12px 16px; border-radius: var(--radius-input); font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <label class="form-label">Pay via UPI</label>
+                        <input type="text" name="upi_id" class="form-input" placeholder="example@upi" required>
+                    </div>
+
+                    <div
+                        style="text-align: center; margin: 24px 0; color: var(--text-secondary); font-size: 14px; display: flex; align-items: center; gap: 10px;">
+                        <hr style="flex: 1; opacity: 0.1;"> OR
+                        <hr style="flex: 1; opacity: 0.1;">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Credit / Debit Card</label>
+                        <div style="position: relative;">
+                            <input type="text" name="card_number" class="form-input" placeholder="0000 0000 0000 0000"
+                                maxlength="19">
+                            <i class="fa-solid fa-credit-card"
+                                style="position: absolute; right: 18px; top: 18px; color: var(--text-muted);"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div>
+                                <label class="form-label">Expiry</label>
+                                <input type="text" placeholder="MM/YY" class="form-input">
+                            </div>
+                            <div>
+                                <label class="form-label">CVV</label>
+                                <input type="password" placeholder="***" class="form-input" maxlength="3">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <button type="submit" class="btn-pay">
+                            <i class="fa-solid fa-lock"></i> Pay ₹{{ booking.total_amount }} Now
+                        </button>
+                        <a href="{% url 'cancel_booking' %}" style="text-decoration: none;">
+                            <button type="button" class="btn-pay"
+                                style="background: rgba(255, 59, 48, 0.1); color: #FF3B30; border: 1.5px solid rgba(255, 59, 48, 0.3);">
+                                <i class="fa-solid fa-xmark"></i> Cancel Booking
+                            </button>
+                        </a>
+                    </div>
+
+                    <p style="margin-top: 16px; font-size: 12px; color: var(--text-secondary); text-align: center;">
+                        <i class="fa-solid fa-shield-halved"></i> 256-bit Secure Encryption
+                    </p>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            // Countdown logic identical to summary page
+            const expiresAt = new Date("{{ booking.expires_at|date:'Y-m-d H:i:s' }}");
+            const timeDisplay = document.getElementById('time-display');
+
+            function updateTimer() {
+                const now = new Date();
+                const diff = expiresAt - now;
+
+                if (diff <= 0) {
+                    timeDisplay.textContent = "00:00";
+                    clearInterval(timerInterval);
+                    window.location.reload();
+                    return;
+                }
+
+                const minutes = Math.floor(diff / 1000 / 60);
+                const seconds = Math.floor((diff / 1000) % 60);
+                timeDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+
+            updateTimer();
+            const timerInterval = setInterval(updateTimer, 1000);
+        })();
+    </script>
+</body>
+
+</html>

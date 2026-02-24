@@ -450,7 +450,8 @@
     }
 
     .dot.booked {
-      background-color: #FF4757;
+      background-color: #39FF14;
+      box-shadow: 0 0 6px rgba(57, 255, 20, 0.3);
     }
 
     /* 7-Day Date Selector */
@@ -550,9 +551,9 @@
     }
 
     .slot-card.booked {
-      opacity: 0.7;
-      background: rgba(255, 71, 87, 0.05);
-      border-color: rgba(255, 71, 87, 0.2);
+      opacity: 0.8;
+      background: rgba(57, 255, 20, 0.05);
+      border-color: rgba(57, 255, 20, 0.2);
       cursor: not-allowed;
     }
 
@@ -580,7 +581,7 @@
     }
 
     .slot-card.booked .slot-price {
-      color: #FF4757;
+      color: #39FF14;
     }
 
     .status-badge {
@@ -598,8 +599,8 @@
     }
 
     .status-badge.booked {
-      background: rgba(255, 71, 87, 0.2);
-      color: #FF4757;
+      background: rgba(57, 255, 20, 0.2);
+      color: #39FF14;
     }
 
     .status-badge.held {
@@ -1325,6 +1326,12 @@
                 // Deselect if already in the list
                 selectedSlots.splice(index, 1);
               } else {
+                // Validation: Same date check
+                if (selectedSlots.length > 0 && selectedSlots[0].date !== slot.date) {
+                  alert("You can only book slots for same date.");
+                  return;
+                }
+
                 // Add if limit (3) not reached
                 if (selectedSlots.length >= 3) {
                   alert("Maximum 3 slots allowed.");
@@ -1340,6 +1347,8 @@
           } else if (status === 'held') {
             card.style.opacity = '0.7';
             card.title = "This slot is temporarily held by another user";
+          } else if (status === 'booked') {
+            card.title = "This slot is already booked";
           }
           grid.appendChild(card);
         });

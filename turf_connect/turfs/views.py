@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 import json
+import uuid
+import random
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -11,7 +13,7 @@ from django.db import transaction
 from django.db.models import Count, Q
 from django.utils import timezone
 from .forms import AddTurfForm
-from .models import Turf, TurfImage, VerificationDocument, Slot
+from .models import Turf, TurfImage, VerificationDocument, Slot, Booking, Payment
 
 
 @login_required(login_url='login')
@@ -130,8 +132,28 @@ def browse_turfs(request):
     })
 
 
+def expire_pending_bookings():
+    """Find and cancel all pending bookings that have expired, releasing their slots."""
+    now = timezone.now()
+    expired_bookings = Booking.objects.filter(status="pending", expires_at__lt=now)
+    
+    if not expired_bookings.exists():
+        return
+
+    with transaction.atomic():
+        for booking in expired_bookings:
+            # Release all slots associated with this booking
+            booking.slots.update(status="available", hold_expiry=None)
+            
+            # Cancel the booking
+            booking.status = "cancelled"
+            booking.save()
+
+
 def turf_detail(request, turf_id):
     """Display detailed information for a specific turf."""
+    expire_pending_bookings()
+    
     turf = get_object_or_404(Turf, id=turf_id, status='approved')
     
     # Filter future slots for the player view
@@ -145,8 +167,6 @@ def turf_detail(request, turf_id):
     
     future_slots = Slot.objects.filter(
         Q(turf=turf),
-        Q(is_booked=False),
-        Q(status__in=["available", "held"]), # Include both available and held
         Q(date__gt=today) | Q(date=today, end_time__gt=now_time)
     ).order_by('date', 'start_time')
     
@@ -502,15 +522,17 @@ def delete_slot(request, slot_id):
         
     return redirect(f"{reverse('slot_management', args=[turf_id])}?date={date_str}")
 
+@login_required
 @csrf_exempt
 def hold_slot(request):
-    """Temporarily hold multiple slots for 5 minutes atomically."""
+    """Temporarily hold multiple slots for 5 minutes atomically and create a pending booking."""
     if request.method == 'POST':
         slot_ids_str = request.POST.get('slot_id')  # Keeping parameter name same for compatibility
         if not slot_ids_str:
             return JsonResponse({'status': 'error', 'message': 'Missing slot_id'}, status=400)
             
         # Global cleanup of expired holds before processing
+        expire_pending_bookings()
         Slot.objects.filter(status="held", hold_expiry__lt=timezone.now()).update(status="available", hold_expiry=None)
         
         slot_ids = [s.strip() for s in slot_ids_str.split(',') if s.strip()]
@@ -518,19 +540,50 @@ def hold_slot(request):
         try:
             with transaction.atomic():
                 # Lock the rows to prevent race conditions
-                slots = Slot.objects.select_for_update().filter(id__in=slot_ids)
+                slots = list(Slot.objects.select_for_update().filter(id__in=slot_ids))
                 
                 # Verify we found all requested slots
-                if slots.count() != len(slot_ids):
+                if len(slots) != len(slot_ids):
                     return JsonResponse({'status': 'error', 'message': 'One or more slots not found'}, status=404)
+                
+                # Validation: Maximum 3 slots
+                if len(slots) > 3:
+                    return JsonResponse({'status': 'error', 'message': 'Maximum 3 slots allowed.'}, status=400)
+                
+                # Validation: Same date and same turf
+                first_date = slots[0].date
+                first_turf = slots[0].turf
+                for slot in slots:
+                    if slot.date != first_date or slot.turf != first_turf:
+                        return JsonResponse({'status': 'error', 'message': 'All selected slots must be on same date.'}, status=400)
                 
                 # Check availability for all slots
                 for slot in slots:
                     if slot.status != 'available':
                         return JsonResponse({'status': 'error', 'message': 'One or more slots no longer available'}, status=400)
                 
-                # All slots available, proceed to hold
+                # Calculate total amount
+                total_amount = sum(slot.price for slot in slots)
+                
+                # Proceed to hold slots
                 expiry_time = timezone.now() + timedelta(minutes=5)
+                
+                # Create Booking object
+                booking = Booking.objects.create(
+                    player=request.user,
+                    turf=first_turf,
+                    date=first_date,
+                    total_amount=total_amount,
+                    status="pending",
+                    expires_at=expiry_time
+                )
+                
+                # Add slots to booking
+                booking.slots.set(slots)
+                
+                # Store booking_id in session
+                request.session["booking_id"] = booking.id
+                
                 for slot in slots:
                     slot.status = 'held'
                     slot.hold_expiry = expiry_time
@@ -538,7 +591,8 @@ def hold_slot(request):
                     
                 return JsonResponse({
                     'status': 'success', 
-                    'message': f'{len(slot_ids)} slots held successfully',
+                    'message': f'{len(slot_ids)} slots held and booking {booking.id} created successfully',
+                    'booking_id': booking.id,
                     'hold_expiry': expiry_time.isoformat()
                 })
         except Exception as e:
@@ -548,5 +602,144 @@ def hold_slot(request):
 
 @login_required
 def booking_summary(request):
-    """Placeholder view for the booking summary page."""
-    return render(request, 'booking_summary.html')
+    """Display the summary of a pending booking."""
+    expire_pending_bookings()
+    
+    booking_id = request.session.get('booking_id')
+    
+    if not booking_id:
+        return redirect('browse_turfs')
+        
+    booking = get_object_or_404(Booking, id=booking_id, player=request.user)
+    
+    if booking.status != "pending":
+        messages.error(request, "This booking has expired.")
+        return redirect('browse_turfs')
+    
+    return render(request, 'booking_summary.html', {'booking': booking})
+
+
+@login_required
+def payment_page(request):
+    """Display the payment page for a pending booking."""
+    expire_pending_bookings()
+    
+    booking_id = request.session.get('booking_id')
+    
+    if not booking_id:
+        return redirect('browse_turfs')
+        
+    booking = get_object_or_404(Booking, id=booking_id, player=request.user)
+    
+    if booking.status != "pending":
+        messages.error(request, "This booking is no longer active.")
+        return redirect('browse_turfs')
+        
+    return render(request, 'payment.html', {'booking': booking})
+
+
+@login_required
+def payment_process(request):
+    """Process the payment for a booking."""
+    if request.method != "POST":
+        return redirect('browse_turfs')
+
+    booking_id = request.session.get('booking_id')
+    if not booking_id:
+        messages.error(request, "Session expired. Please try again.")
+        return redirect('browse_turfs')
+
+    booking = get_object_or_404(Booking, id=booking_id, player=request.user)
+
+    if booking.status != "pending":
+        messages.error(request, "This booking is no longer awaiting payment.")
+        return redirect('browse_turfs')
+
+    try:
+        with transaction.atomic():
+            # Check for expiration right before processing
+            if booking.expires_at and timezone.now() > booking.expires_at:
+                messages.error(request, "Booking expired.")
+                return redirect('booking_summary')
+
+            # Simulate payment success (70% success rate)
+            is_success = random.random() < 0.7
+            
+            payment_id = f"PAY-{uuid.uuid4().hex[:12].upper()}"
+            
+            if is_success:
+                # Create Payment record
+                Payment.objects.create(
+                    booking=booking,
+                    payment_id=payment_id,
+                    amount=booking.total_amount,
+                    status="success"
+                )
+                
+                # Update Booking status
+                booking.status = "paid"
+                booking.save()
+                
+                # Update Slots status
+                booking.slots.select_for_update().update(status="booked", hold_expiry=None)
+                
+                # Clear session booking_id on success
+                request.session.pop('booking_id', None)
+                
+                messages.success(request, f"Payment Successful! Your booking (ID: {booking.id}) is confirmed.")
+                return redirect('booking_success', booking_id=booking.id)
+            else:
+                # Simulated failure logic
+                Payment.objects.create(
+                    booking=booking,
+                    payment_id=payment_id,
+                    amount=booking.total_amount,
+                    status="failed"
+                )
+                messages.error(request, "Payment failed. Try again.")
+                return redirect('payment_page')
+                
+    except Exception as e:
+        messages.error(request, f"An error occurred: {str(e)}")
+        return redirect('payment_page')
+
+
+@login_required
+def booking_success(request, booking_id):
+    """Show the success message after payment."""
+    booking = get_object_or_404(Booking, id=booking_id, player=request.user)
+    
+    if booking.status != "paid":
+        return redirect('browse_turfs')
+    
+    # Fetch the successful payment record
+    payment = Payment.objects.filter(booking=booking, status='success').first()
+    
+    return render(request, 'booking_success.html', {
+        'booking': booking,
+        'payment': payment
+    })
+@login_required
+def cancel_booking(request):
+    """Allow user to cancel their pending booking and release slots."""
+    booking_id = request.session.get('booking_id')
+    if not booking_id:
+        return redirect('browse_turfs')
+
+    booking = get_object_or_404(Booking, id=booking_id, player=request.user)
+    
+    if booking.status == "pending":
+        with transaction.atomic():
+            # Release all slots
+            booking.slots.select_for_update().update(status="available", hold_expiry=None)
+            
+            # Mark booking as cancelled
+            booking.status = "cancelled"
+            booking.save()
+            
+            # Clear session
+            request.session.pop('booking_id', None)
+            
+            messages.success(request, "Booking cancelled successfully.")
+    
+    return redirect('browse_turfs')
