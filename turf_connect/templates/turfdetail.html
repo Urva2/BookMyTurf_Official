@@ -1232,7 +1232,7 @@
 
     <script>
       // Data passed from Django as JSON
-      const rawSlots = {{ slots_json| safe }};
+      const rawSlots = JSON.parse('{{ slots_json|escapejs }}' || '[]');
 
       // Current local time from metadata
       const serverNow = new Date("{{ today|date:'Y-m-d' }}T{{ now_time|time:'H:i:s' }}");
